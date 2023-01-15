@@ -1,0 +1,31 @@
+<div class="container">
+    <form class="login" [formGroup]="AuthorizationForm" (submit)="login()">
+        <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput 
+                formControlName="login"
+                [(ngModel)]="user.username"
+                placeholder="Enter your username" 
+                autocomplete="off">
+            <mat-error *ngIf="AuthorizationForm.get('login')?.invalid">This field is required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput 
+                formControlName="password"
+                [(ngModel)]="user.password"
+                type="password" 
+                placeholder="Enter your password">
+                <mat-error *ngIf="AuthorizationForm.get('password')?.invalid">This field is required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Choose your role</mat-label>
+            <mat-select [(value)]="selectedRole">
+                <mat-option value="admin">Administrator</mat-option>
+                <mat-option value="teacher">Teacher</mat-option>
+                <mat-option value="pupil">Pupil</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button type="submit" mat-raised-button color="primary" >Login</button>
+    </form>
+</div>
