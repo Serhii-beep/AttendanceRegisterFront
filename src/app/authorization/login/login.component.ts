@@ -5,6 +5,7 @@ import { HttpService } from '../http.service';
 import { Subscription } from 'rxjs';
 import { Admin } from 'src/app/dtos/admin.dto';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(private formBuilder: FormBuilder,
     private httpService: HttpService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.AuthorizationForm = this.formBuilder.group({
@@ -42,6 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           localStorage.setItem('userToken', resp.token);
           localStorage.setItem('currentUser', JSON.stringify(resp.user));
           localStorage.setItem('userRole', 'admin');
+          this.router.navigate(['admin']);
         }, error => this.setUserError(error));
         break;
       }
@@ -58,13 +61,14 @@ export class LoginComponent implements OnInit, OnDestroy {
           localStorage.setItem('userToken', resp.token);
           localStorage.setItem('currentUser', JSON.stringify(resp.user));
           localStorage.setItem('userRole', 'teacher');
-        });
+        }, error => this.setUserError(error));
         break;
       }
     }
   }
 
   setUserError(error: any): void {
+    console.log(error);
     this.snackBar.open(error.error, 'Close');
   }
 
