@@ -12,11 +12,17 @@ import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
+import { AdminPupilsComponent } from './admin-pupils/admin-pupils.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
   declarations: [
-    AdminMainComponent
+    AdminMainComponent,
+    AdminPupilsComponent
   ],
   imports: [
     CommonModule,
@@ -29,12 +35,11 @@ import { MatMenuModule } from '@angular/material/menu';
     MatListModule,
     MatCheckboxModule,
     FormsModule,
-    MatMenuModule
-  ],
-  exports: [
-    MatSidenavModule,
-    MatCheckboxModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
+    MatSortModule
   ]
 })
 export class AdminModule { }

@@ -14,8 +14,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   AuthorizationForm!: FormGroup;
-  selectedRole: string = "pupil";
-  user: UserAuthorizationDto = {username: '', password: ''};
+  user: UserAuthorizationDto = {username: '', password: '', role: 'pupil'};
   loginSubscr!: Subscription;
 
   constructor(private formBuilder: FormBuilder,
@@ -38,7 +37,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     localStorage.removeItem('userToken');
     localStorage.removeItem('currentUser');
     localStorage.removeItem('userRole');
-    switch(this.selectedRole) {
+    switch(this.user.role) {
       case 'admin': {
         this.loginSubscr = this.httpService.loginAdmin(this.user).subscribe((resp: any) => {
           localStorage.setItem('userToken', resp.token);

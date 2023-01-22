@@ -31,5 +31,8 @@ export class AdminMainComponent implements OnInit {
 
   logout(): void {
     this.router.navigate(['login']);
+    localStorage.removeItem('userToken');
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('userRole');
   }
 }
