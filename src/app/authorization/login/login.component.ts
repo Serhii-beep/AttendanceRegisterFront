@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           localStorage.setItem('userToken', resp.token);
           localStorage.setItem('currentUser', JSON.stringify(resp.user));
           localStorage.setItem('userRole', 'admin');
-          this.router.navigate(['admin']);
+          this.router.navigate(['admin/pupils']);
         }, error => this.setUserError(error));
         break;
       }

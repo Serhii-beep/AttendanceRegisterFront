@@ -1,32 +1,25 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      mode="over"
-      opened="false">
-    <mat-toolbar>Меню</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item [routerLink]="'pupils'">Учні</a>
-      <a mat-list-item href="#">Вчителі</a>
-      <a mat-list-item href="#">Класи</a>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <button class="btn__profile" 
-        mat-mini-fab
-        color="accent"
-        [mat-menu-trigger-for]="beforeMenu">{{ currentUser.login[0] }}</button>
-        <mat-menu #beforeMenu xPosition="before">
-          <button (click)="logout()" mat-menu-item>Вийти <mat-icon class="icon">logout</mat-icon></button>
-        </mat-menu>
-    </mat-toolbar>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<div id="navbar-animmenu">
+  <ul class="show-dropdown main-navbar">
+    <div class="hori-selector">
+      <div class="left"></div>
+      <div class="right"></div>
+    </div>
+    <li class="active">
+      <a [routerLink]="'pupils'"><mat-icon>people</mat-icon> Учні</a>
+    </li>
+    <li>
+      <a href="#"><mat-icon>school</mat-icon> Вчителі</a>
+    </li>
+    <li>
+      <a href="#"><mat-icon>class</mat-icon> Класи</a>
+    </li>
+  </ul>
+  <button mat-fab [mat-menu-trigger-for]="menu" class="btn__profile">{{ currentUser.login[0] }}</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon> 
+      <span>Вийти</span>
+    </button>
+  </mat-menu>
+</div>
+<router-outlet></router-outlet>

@@ -1,10 +1,12 @@
+$font-color: #fdf9ea;
+
 .container {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url('../images/background.jpg');
+    background-image: url('../images/background4.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -13,4 +15,59 @@
     display: flex;
     flex-direction: column;
     width: 30%;
+    background: rgba(48, 55, 78, .8);
+    align-items: center;
+    padding: 50px 0;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.inputField {
+    width: 70%;
+    margin-bottom: 20px;
+}
+
+.input {
+    color: $font-color;
+}
+
+.label {
+    color: $font-color;
+    opacity: .65;
+}
+
+.input::placeholder {
+    color: $font-color;
+    opacity: .4;
+    font-size: 13px;
+}
+
+::ng-deep {
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+        color: $font-color;
+    }
+
+    .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+        color: $font-color !important;
+    }
+
+    .mat-input-element {
+        caret-color: $font-color;
+    }
+
+    .mat-select-value {
+        color: $font-color !important;
+    }
+
+    .mat-select-arrow {
+        color: $font-color;
+    }
+
+    
+}
+
+.btn {
+    width: 70%;
+    background-color: $font-color;
+    color: rgba(48, 55, 78, .8);;
 }

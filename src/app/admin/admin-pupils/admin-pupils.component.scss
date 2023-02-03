@@ -1,13 +1,46 @@
 .wrapper {
     display: flex;
-    justify-content: center;
-    height: 100%;
+    flex-direction: column;
+    align-items: center;
+}
+
+::ng-deep {
+    .mat-table {
+        background-color: #585E71;
+        border-radius: 10px;
+    }
+
+    .mat-cell, .mat-header-cell {
+        color: #E5DED8;
+    }
+
+
+    .mat-paginator {
+        background-color: #585E71;
+        border-radius: 0 0 10px 10px;
+        color: #E5DED8;
+    }
+}
+
+.icon {
+    margin-right: 10px;
+}
+
+.btn__add {
+    max-width: 150px;
+    align-self: flex-start;
+    margin: 30px;
+    height: 40px;
+    margin-left: 230px;
+    background-color: #E5DED8;
+    color: #585E71;
 }
 
 .container {
     position: relative;
     width: 70%;
     margin-top: 20px;
+    border-radius: 10px;
 }
 
 .loading-shade {
@@ -28,6 +61,8 @@
     min-height: 200px;
     max-height: 700px;
     overflow: auto;
+    border-radius: 10px 10px 0 0;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
 }
 
 table {

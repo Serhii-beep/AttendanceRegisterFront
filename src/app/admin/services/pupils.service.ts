@@ -12,7 +12,11 @@ export class PupilsService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAllPupils(order: string, page: number, itemsPerPage: number): Observable<Pupil[]> {
+  getAllPupilsPaginated(order: string, page: number, itemsPerPage: number): Observable<Pupil[]> {
     return this.httpClient.get<Pupil[]>(`${this.BASE_URL}/order=${order}&page=${page}&itemsPerPage=${itemsPerPage}`);
+  }
+
+  addPupil(pupil: Pupil): Observable<Pupil> {
+    return this.httpClient.post<Pupil>(`${this.BASE_URL}`, pupil);
   }
 }

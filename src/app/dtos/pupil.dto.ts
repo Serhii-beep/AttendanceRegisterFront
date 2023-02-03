@@ -9,4 +9,5 @@ export interface Pupil {
     birthDate: Date;
     login: string;
     password: string;
+    role: string;
 }

@@ -1,4 +1,5 @@
 <div class="wrapper">
+    <button (click)="openAddPupilForm()" class="btn__add" mat-raised-button color="accent"><mat-icon class="icon">add</mat-icon> Додати учня</button>
     <div class="container mat-elevation-z8">
         <div class="loading-shade"
             *ngIf="isLoadingResults">
@@ -8,7 +9,7 @@
             <table mat-table [dataSource]="pupils"
                 matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
                 <ng-container matColumnDef="fullName">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>П.І.П</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>П.І.Б</th>
                     <td mat-cell *matCellDef="let row">{{ row.fullName }}</td>
                 </ng-container>
                 <ng-container matColumnDef="email">

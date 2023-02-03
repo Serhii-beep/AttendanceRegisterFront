@@ -1,0 +1,32 @@
+.icon {
+    margin-right: 10px;
+}
+
+.wrapper {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 7%;
+}
+
+.stepper {
+    width: 100%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.btn__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    & button {
+        margin: 10px;
+        min-width: 100px;
+    }
+}
