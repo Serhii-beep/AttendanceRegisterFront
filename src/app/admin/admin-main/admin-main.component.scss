@@ -11,6 +11,8 @@
 #navbar-animmenu li {
   list-style-type: none;
   float: left;
+  min-width: 150px;
+  text-align: center;
 }
 
 #navbar-animmenu ul li a {

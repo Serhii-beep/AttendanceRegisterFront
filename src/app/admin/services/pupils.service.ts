@@ -19,4 +19,8 @@ export class PupilsService {
   addPupil(pupil: Pupil): Observable<Pupil> {
     return this.httpClient.post<Pupil>(`${this.BASE_URL}`, pupil);
   }
+
+  deletePupil(id: number): Observable<any> {
+    return this.httpClient.delete(`${this.BASE_URL}/${id}`);
+  }
 }

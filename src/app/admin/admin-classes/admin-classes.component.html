@@ -1,0 +1,31 @@
+<div class="filter__wrapper">
+    <div class="filter">
+        <div class="input__container">
+            <input type="text" class="input" placeholder="Введіть назву класу" [(ngModel)]="filterClass">
+            <select [(ngModel)]="selectedProfile">
+                <option value="Any">Всі профілі</option>
+                <option *ngFor="let profile of profiles" [value]="[profile.profileName]">
+                    {{ profile.profileName }}
+                </option>
+            </select>
+        </div>
+        <div class="search" (click)="filter()">
+            <mat-icon class="search__icon">search</mat-icon>
+        </div>
+    </div>
+</div>
+<div class="wrapper">
+    <mat-card *ngFor="let class of filteredClasses"
+        class="card"
+        (click)="openPupils(class.id)">
+        <mat-card-title>{{ class.name }}</mat-card-title>
+        <mat-card-subtitle>Профіль: {{ class.profileName }}</mat-card-subtitle>
+        <mat-card-content>Кількість учнів: {{ class.numberOfPupils }}</mat-card-content>
+        <mat-divider inset></mat-divider>
+        <mat-card-actions class="actions">
+            <mat-icon class="icon">edit</mat-icon>
+            <mat-divider inset vertical class="divider"></mat-divider>
+            <mat-icon class="icon">delete</mat-icon>
+        </mat-card-actions>
+    </mat-card>
+</div>

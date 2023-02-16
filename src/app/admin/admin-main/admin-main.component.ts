@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
 import { Admin } from 'src/app/dtos/admin.dto';
-import { Router } from '@angular/router';
-declare var $: any;
+import { Router, Event, NavigationEnd } from '@angular/router';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-admin-main',
@@ -14,40 +11,64 @@ declare var $: any;
 export class AdminMainComponent implements OnInit {
   currentUser!: Admin;
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
-
-  constructor(private breakpointObserver: BreakpointObserver,
-    private router: Router) {}
+  constructor(private router: Router) {}
   
   ngOnInit(): void {
     let admin = localStorage.getItem('currentUser');
     if(admin) {
       this.currentUser = JSON.parse(admin);
     }
-    var tabsNewAnim = $('#navbar-animmenu');
-		var selectorNewAnim = $('#navbar-animmenu').find('li').length;
-		//var selectorNewAnim = $(".tabs").find(".selector");
-		var activeItemNewAnim = tabsNewAnim.find('.active');
-		var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
-		var itemPosNewAnimLeft = activeItemNewAnim.position();
-		$(".hori-selector").css({
-			"left":itemPosNewAnimLeft.left + "px",
-			"width": activeWidthNewAnimWidth + "px"
-		});
-		$("#navbar-animmenu").on("click","li",() =>{
-			$('#navbar-animmenu ul li').removeClass("active");
-			$(this).addClass('active');
-			var activeWidthNewAnimWidth = $(this).innerWidth();
-			var itemPosNewAnimLeft = $(this).position();
-			$(".hori-selector").css({
-				"left":itemPosNewAnimLeft.left + "px",
-				"width": activeWidthNewAnimWidth + "px"
-			});
-		});
+    var tabsNewAnim = $("#navbar-animmenu");
+    var activeItemNewAnim = tabsNewAnim.find(".active");
+    var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+    var itemPosNewAnimLeft = activeItemNewAnim.position();
+    $(".hori-selector").css({
+      left: itemPosNewAnimLeft.left + "px",
+      width: activeWidthNewAnimWidth + "px"
+    });
+    $("#navbar-animmenu").on("click", "li", function (e) {
+      $("#navbar-animmenu ul li").removeClass("active");
+      $(this).addClass("active");
+      var activeWidthNewAnimWidth = $(this).innerWidth();
+      var itemPosNewAnimLeft = $(this).position();
+      $(".hori-selector").css({
+        left: itemPosNewAnimLeft.left + "px",
+        width: activeWidthNewAnimWidth + "px"
+      });
+    });
+    this.router.events.subscribe((event: Event) => {
+      if(event instanceof NavigationEnd) {
+        $("#navbar-animmenu ul li").removeClass("active");
+        if(event.url.includes("pupils")) {
+          var el = $("#pupils");
+          el.addClass("active");
+          var activeWidthNewAnimWidth = el.innerWidth();
+          var itemPosNewAnimLeft = el.position();
+          $(".hori-selector").css({
+            left: itemPosNewAnimLeft.left + "px",
+            width: activeWidthNewAnimWidth + "px"
+          });
+        } else if(event.url.includes("teachers")) {
+          var el = $("#teachers");
+          el.addClass("active");
+          var activeWidthNewAnimWidth = el.innerWidth();
+          var itemPosNewAnimLeft = el.position();
+          $(".hori-selector").css({
+            left: itemPosNewAnimLeft.left + "px",
+            width: activeWidthNewAnimWidth + "px"
+          });
+        } else if(event.url.includes("classes")) {
+          var el = $("#classes");
+          el.addClass("active");
+          var activeWidthNewAnimWidth = el.innerWidth();
+          var itemPosNewAnimLeft = el.position();
+          $(".hori-selector").css({
+            left: itemPosNewAnimLeft.left + "px",
+            width: activeWidthNewAnimWidth + "px"
+          });
+        }
+      }
+    })
   }
 
   logout(): void {

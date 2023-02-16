@@ -12,6 +12,10 @@ export class ClassProfilesService {
   constructor(private _httpClient: HttpClient) { }
 
   getAllWithClasses(): Observable<ClassProfile[]> {
+    return this._httpClient.get<ClassProfile[]>(`${this.BASE_URL}/included`);
+  }
+
+  getAll(): Observable<ClassProfile[]> {
     return this._httpClient.get<ClassProfile[]>(`${this.BASE_URL}`);
   }
 }

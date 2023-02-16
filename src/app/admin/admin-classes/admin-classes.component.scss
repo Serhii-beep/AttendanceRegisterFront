@@ -1,0 +1,140 @@
+.wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    min-width: 250px;
+    margin: 20px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
+    transition: .5s ease;
+    background-color: #E5DED8;
+}
+
+.card:hover {
+    cursor: pointer;
+    background-color: #cac6c2;
+    box-shadow: rgba(0, 0, 0, 0.35) 10px 30px 40px;
+}
+
+.mat-divider.mat-divider-inset {
+    height: 25px;
+    margin: 0 10px;
+}
+
+.mat-divider.mat-divider-vertical {
+    background-color: #000;
+}
+
+.actions {
+    display: flex;
+}
+
+.icon {
+    opacity: .7;
+    transition: .3s ease;
+}
+
+.icon:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.filter__wrapper {
+    margin: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.filter {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    width: 80%;
+    height: 60px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    background-color: #585E71;
+}
+
+.search {
+    margin-left: auto;
+    margin-right: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: .5s ease;
+
+    &__icon {
+        transition: .85s ease;
+        font-size: 30px;
+        color: #E5DED8;
+        cursor: pointer;
+
+        &:hover {
+            transform: rotateY(360deg);
+        }
+    }
+
+    &:hover {
+        transform: scale(1.4);
+    }
+}
+
+.input__container {
+    margin-left: 30px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .input {
+        padding-left: 20px;
+        width: 400px;
+        height: 60%;
+        border: 2px solid #E5DED8;
+        border-radius: 30px;
+        background-color: rgba(88,94,113, .8);
+        transition: .5s ease;
+        outline: none;
+        color: #E5DED8;
+
+        &:focus {
+            border-color: #9ecaed;
+            box-shadow: 0 0 10px #9ecaed;
+        }
+
+        &::placeholder {
+            color: #E5DED8;
+        }
+    }
+}
+
+select {
+    appearance: none;
+    border: 0;
+    outline: 0;
+    margin-left: 200px;
+    width: 300px;
+    height: 3em;
+    padding: 0 4em 0 1em;
+    background: #E5DED8;
+    color: #585E71;
+    border-radius: .25em;
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, .2);
+    cursor: pointer;
+
+    option {
+        color: inherit;
+        background-color: #E5DED8;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &::-ms-expand {
+        display: none;
+    }
+}

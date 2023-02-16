@@ -8,6 +8,7 @@ import { ValidateBirthDate } from 'src/app/shared/validators/birthDateValidator.
 import { PupilsService } from '../services/pupils.service';
 import { Pupil } from 'src/app/dtos/pupil.dto';
 import { Router } from '@angular/router';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-pupil',
@@ -32,7 +33,8 @@ export class CreatePupilComponent implements OnInit, OnDestroy {
   constructor(private formBuilder: FormBuilder,
     private classProfilesService: ClassProfilesService,
     private pupilService: PupilsService,
-    private router: Router) { 
+    private router: Router,
+    public dialogRef: MatDialogRef<CreatePupilComponent>) { 
       this.pupil = {
         id: 0,
         fullName: '',
@@ -91,7 +93,7 @@ export class CreatePupilComponent implements OnInit, OnDestroy {
 
   addPupil() {
     this.pupilSub = this.pupilService.addPupil(this.pupil).subscribe((resp: any) => {
-      this.router.navigate(['admin/pupils']);
+      this.dialogRef.close();
     }, error => console.log(error));
   }
 

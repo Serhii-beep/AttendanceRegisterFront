@@ -4,14 +4,14 @@
       <div class="left"></div>
       <div class="right"></div>
     </div>
-    <li class="active">
+    <li class="active" id="pupils">
       <a [routerLink]="'pupils'"><mat-icon>people</mat-icon> Учні</a>
     </li>
-    <li>
+    <li id="teachers">
       <a href="#"><mat-icon>school</mat-icon> Вчителі</a>
     </li>
-    <li>
-      <a href="#"><mat-icon>class</mat-icon> Класи</a>
+    <li id="classes">
+      <a [routerLink]="'classes'"><mat-icon>class</mat-icon> Класи</a>
     </li>
   </ul>
   <button mat-fab [mat-menu-trigger-for]="menu" class="btn__profile">{{ currentUser.login[0] }}</button>

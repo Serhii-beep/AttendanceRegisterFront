@@ -26,6 +26,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatDatepickerModule,
     MatNativeDateModule,
     MatDialogModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCardModule
   ],
   providers: [
     {

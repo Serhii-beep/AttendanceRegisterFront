@@ -26,12 +26,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { AdminClassesComponent } from './admin-classes/admin-classes.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
     AdminMainComponent,
     AdminPupilsComponent,
-    CreatePupilComponent
+    CreatePupilComponent,
+    AdminClassesComponent
   ],
   imports: [
     CommonModule,
@@ -56,7 +59,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatDatepickerModule,
     MatSelectModule,
     MatDialogModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCardModule
   ]
 })
 export class AdminModule { }
