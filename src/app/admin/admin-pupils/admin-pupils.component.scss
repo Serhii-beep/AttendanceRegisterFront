@@ -25,7 +25,7 @@
 .btn__add {
     max-width: 150px;
     height: 35px;
-    margin-left: 30px;
+    margin-left: auto;
     background-color: #E5DED8;
     color: #585E71;
 }
@@ -33,7 +33,8 @@
 .btn__clear {
     max-width: 200px;
     height: 35px;
-    margin-left: 30px;
+    margin-left: 15px;
+    margin-right: 30px;
     background-color: #E5DED8;
     color:  #585E71;
 }
@@ -52,6 +53,7 @@
     border-radius: 10px 10px 0 0;
     display: flex;
     align-items: center;
+    flex-direction: row;
 }
 
 .loading-shade {
@@ -79,13 +81,21 @@ table {
     width: 100%;
 }
 
-.delete__ico {
+.ico {
     transition: .35s ease;
 }
 
-.delete__ico:hover {
+.ico:hover {
     cursor: pointer;
     transform: scale(1.2);
+}
+
+.divider {
+    display: inline-block;
+    width: 2px;
+    height: 25px;
+    margin: 0 10px;
+    background-color: #E5DED8;
 }
 
 .alert {
@@ -171,4 +181,50 @@ table {
 
 .is-visible .alert-container {
     transform: translateY(0);
+}
+
+.input {
+    margin-left: 30px;
+    padding-left: 20px;
+    width: 400px;
+    height: 60%;
+    border: 2px solid #E5DED8;
+    border-radius: 30px;
+    background-color: rgba(88,94,113, .8);
+    transition: .5s ease;
+    outline: none;
+    color: #E5DED8;
+
+    &:focus {
+        border-color: #9ecaed;
+        box-shadow: 0 0 10px #9ecaed;
+    }
+
+    &::placeholder {
+        color: #E5DED8;
+    }
+}
+
+.search {
+    margin-left: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: .5s ease;
+
+    &__icon {
+        transition: .85s ease;
+        font-size: 30px;
+        color: #E5DED8;
+        cursor: pointer;
+
+        &:hover {
+            transform: rotateY(360deg);
+        }
+    }
+
+    &:hover {
+        transform: scale(1.4);
+    }
 }

@@ -20,9 +20,11 @@ export class AdminPupilsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   pupils: Pupil[] = [];
   pupilsLength = 0;
+  pupilsFilter = "";
   pupilsSubscr!: Subscription;
   deletePupilSub!: Subscription;
   displayedColumns: string[] = ['fullName', 'email', 'class', 'address', 'birthDate', 'delete'];
+  classId!: number;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -35,15 +37,16 @@ export class AdminPupilsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    let classId = this.route.snapshot.queryParamMap.get('class');
-    if(classId) {
-      this.getPupils(parseInt(classId as string))
+    let classIdStr = this.route.snapshot.queryParamMap.get('class');
+    this.classId = parseInt(classIdStr as string);
+    if(this.classId) {
+      this.getPupils(this.classId);
     } else {
       this.getPupils();
     }
   }
 
-  getPupils(classId?: number) {
+  getPupils(classId?: number, fullName?: string) {
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
     merge(this.sort.sortChange, this.paginator.page).pipe(
       startWith({}),
@@ -62,23 +65,51 @@ export class AdminPupilsComponent implements OnInit, AfterViewInit, OnDestroy {
       })
     ).subscribe(data => {
       this.pupils = data;
-      if(classId) {
+      if(classId && classId != -1) {
         this.pupils = this.pupils.filter(p => p.class.id == classId);
-        this.pupilsLength = this.pupils.length;
       }
+      if(fullName) {
+        this.pupils = this.pupils.filter(p => p.fullName.toLowerCase().includes(fullName.toLowerCase()));
+      }
+      this.pupilsLength = this.pupils.length;
     });
   }
 
   clearFilters() {
+    this.classId = -1;
+    this.pupilsFilter = "";
     this.getPupils();
   }
 
-  openAddPupilForm(): void {
+  editPupil(pupil: Pupil) {
     const dialogRef = this.dialog.open(CreatePupilComponent, {
       height: '70%',
       width: '75%'
     });
-    dialogRef.afterClosed().subscribe(res => this.getPupils());
+    dialogRef.componentInstance.resultButtonText = "Зберегти";
+    dialogRef.componentInstance.pupil = pupil;
+    dialogRef.componentInstance.action = "edit";
+    dialogRef.afterClosed().subscribe(res => {
+      this.getPupils();
+      if(res && res == "success") {
+        this.snackBar.open("Учня відредаговано", "Ok");
+      }
+    });
+  }
+
+  addPupil(): void {
+    const dialogRef = this.dialog.open(CreatePupilComponent, {
+      height: '70%',
+      width: '75%'
+    });
+    dialogRef.componentInstance.resultButtonText = "Додати учня";
+    dialogRef.componentInstance.action = "create";
+    dialogRef.afterClosed().subscribe(res => {
+      this.getPupils();
+      if(res && res == "success") {
+        this.snackBar.open("Учня додано", "Ok");
+      }
+    });
   }
 
   deletePupil(id: number): void {

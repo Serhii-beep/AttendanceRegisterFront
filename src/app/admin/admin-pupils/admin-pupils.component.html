@@ -5,7 +5,11 @@
             <mat-spinner></mat-spinner>
         </div>
         <div class="tools">
-            <button (click)="openAddPupilForm()" class="btn__add" mat-raised-button color="accent"><mat-icon>add</mat-icon> Додати учня</button>
+            <input type="text" class="input" placeholder="Введіть ім'я учня" [(ngModel)]="pupilsFilter">
+            <div class="search" (click)="getPupils(classId, pupilsFilter)">
+                <mat-icon class="search__icon">search</mat-icon>
+            </div>
+            <button (click)="addPupil()" class="btn__add" mat-raised-button color="accent"><mat-icon>add</mat-icon> Додати учня</button>
             <button (click)="clearFilters()" class="btn__clear" mat-raised-button color="accent"><mat-icon>clear_all</mat-icon> Очистити фільтри</button>
         </div>
         <mat-divider inset></mat-divider>
@@ -35,7 +39,9 @@
                 <ng-container matColumnDef="delete">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let row">
-                        <mat-icon (click)="deletePupil(row.id)" class="delete__ico">delete</mat-icon>
+                        <mat-icon (click)="deletePupil(row.id)" class="ico">delete</mat-icon>
+                        <span class="divider"></span>
+                        <mat-icon class="ico" (click)="editPupil(row)">edit</mat-icon>
                     </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

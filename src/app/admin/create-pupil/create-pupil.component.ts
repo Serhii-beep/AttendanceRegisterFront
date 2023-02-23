@@ -29,12 +29,14 @@ export class CreatePupilComponent implements OnInit, OnDestroy {
   classProfilesSub!: Subscription;
   pupilSub!: Subscription;
   pupil!: Pupil;
+  resultButtonText!: string;
+  action!: string;
 
   constructor(private formBuilder: FormBuilder,
     private classProfilesService: ClassProfilesService,
     private pupilService: PupilsService,
     private router: Router,
-    public dialogRef: MatDialogRef<CreatePupilComponent>) { 
+    public dialogRef: MatDialogRef<CreatePupilComponent>) {
       this.pupil = {
         id: 0,
         fullName: '',
@@ -92,9 +94,15 @@ export class CreatePupilComponent implements OnInit, OnDestroy {
   }
 
   addPupil() {
-    this.pupilSub = this.pupilService.addPupil(this.pupil).subscribe((resp: any) => {
-      this.dialogRef.close();
-    }, error => console.log(error));
+    if(this.action == "create") {
+      this.pupilSub = this.pupilService.addPupil(this.pupil).subscribe((resp: any) => {
+        this.dialogRef.close("success");
+      }, error => console.log(error));
+    } else if(this.action == "edit") {
+      this.pupilSub = this.pupilService.updatePupil(this.pupil).subscribe((resp: Pupil) => {
+        this.dialogRef.close("success");
+      }, error => console.log(error));
+    }
   }
 
   ngOnDestroy(): void {

@@ -30,3 +30,13 @@
         min-width: 100px;
     }
 }
+
+::ng-deep {
+    .mat-select-value {
+        color: #585E71 !important;
+    }
+
+    .mat-select-arrow {
+        color: #585E71;
+    }
+}
