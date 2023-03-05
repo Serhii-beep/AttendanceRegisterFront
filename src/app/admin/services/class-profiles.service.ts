@@ -7,7 +7,7 @@ import { ClassProfile } from 'src/app/dtos/classProfile.dto';
   providedIn: 'root'
 })
 export class ClassProfilesService {
-  private BASE_URL = "https://localhost:7288/api/ClassProfiles";
+  private BASE_URL = "https://localhost:8081/api/ClassProfiles";
 
   constructor(private _httpClient: HttpClient) { }
 

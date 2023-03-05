@@ -1,0 +1,25 @@
+<mat-dialog-content>
+    <div class="wrapper">
+        <form [formGroup]="classForm">
+            <mat-form-field class="inputField" appearance="outline">
+                <mat-label class="label">Назва класу</mat-label>
+                <input matInput 
+                    formControlName="className"
+                    [(ngModel)]="class.name"
+                    placeholder="Введіть назву класу"
+                    class="input" 
+                    autocomplete="off">
+                <mat-error *ngIf="classForm.get('className')?.invalid">Це поле є обов'язковим</mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="action=='add'" appearance="outline">
+                <mat-label>Профіль</mat-label>
+                <mat-select [(value)]="selectedProfileId">
+                    <mat-option *ngFor="let profile of profiles" [value]="profile.id">
+                        {{ profile.profileName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-raised-button color="accent" (click)="btnSubmitClick()">{{ btnText }}</button>
+        </form>
+    </div>
+</mat-dialog-content>

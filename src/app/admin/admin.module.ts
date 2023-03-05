@@ -28,13 +28,15 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AdminClassesComponent } from './admin-classes/admin-classes.component';
 import { MatCardModule } from '@angular/material/card';
+import { ManageClassComponent } from './manage-class/manage-class.component';
 
 @NgModule({
   declarations: [
     AdminMainComponent,
     AdminPupilsComponent,
     CreatePupilComponent,
-    AdminClassesComponent
+    AdminClassesComponent,
+    ManageClassComponent
   ],
   imports: [
     CommonModule,

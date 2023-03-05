@@ -58,7 +58,7 @@
 }
 
 .search {
-    margin-left: auto;
+    margin-left: 20px;
     margin-right: 30px;
     display: flex;
     justify-content: center;
@@ -115,7 +115,7 @@ select {
     appearance: none;
     border: 0;
     outline: 0;
-    margin-left: 200px;
+    margin-left: 75px;
     width: 300px;
     height: 3em;
     padding: 0 4em 0 1em;
@@ -137,4 +137,98 @@ select {
     &::-ms-expand {
         display: none;
     }
+}
+
+.alert {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(94, 110, 141, 0.9);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s 0s, visibility 0s .3s;
+}
+
+.alert.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .3s 0s, visibility 0s 0s;
+}
+
+.alert-container {
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+    margin: 4em auto;
+    background: #585E71;
+    color: #E5DED8;
+    border-radius: .25em .25em .4em .4em;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+    transform: translateY(-40px);
+    transition-property: transform;
+    transition-duration: .3s;
+    overflow: hidden;
+}
+
+.alert-container p {
+    padding: 3em 1em;
+}
+
+.alert-container footer {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.alert-container footer div {
+    height: 60px;
+    line-height: 60px;
+    color: #E5DED8;
+    font-weight: 700;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, .2);
+    flex: 1;
+    background: #b6bece;
+    text-decoration: none;
+    transition: background-color .2s;
+}
+
+.alert-container footer div:hover {
+    box-shadow: 0 0 100em 100em rgba(0, 0, 0, .2) inset;
+    cursor: pointer;
+}
+
+.alert-container footer .alert-cancel {
+    background: #fc5169;
+}
+
+.alert-container .alert-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 30px;
+    height: 30px;
+    color: #8f9cb5;
+    font-weight: 900;
+    font-size: 1.5em;
+    text-decoration: none;
+}
+
+.alert-container .alert-close:hover {
+    cursor: pointer;
+}
+
+.is-visible .alert-container {
+    transform: translateY(0);
+}
+
+.btn__add {
+    max-width: 150px;
+    height: 35px;
+    margin-left: auto;
+    margin-right: 30px;
+    background-color: #E5DED8;
+    color: #585E71;
 }

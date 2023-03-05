@@ -8,7 +8,7 @@ import { Pupil } from 'src/app/dtos/pupil.dto';
   providedIn: 'root'
 })
 export class PupilsService {
-  private BASE_URL = "https://localhost:7288/api/Pupils";
+  private BASE_URL = "https://localhost:8081/api/Pupils";
 
   constructor(private httpClient: HttpClient) { }
 

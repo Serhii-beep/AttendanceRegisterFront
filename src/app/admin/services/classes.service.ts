@@ -8,7 +8,7 @@ import { ClassInfo } from 'src/app/dtos/classInfo.dto';
   providedIn: 'root'
 })
 export class ClassesService {
-  private BASE_URL = "https://localhost:7288/api/Classes";
+  private BASE_URL = "https://localhost:8081/api/Classes";
 
   constructor(private _httpClient: HttpClient) { }
 
@@ -18,5 +18,17 @@ export class ClassesService {
 
   getAllClassesIncluded(): Observable<ClassInfo[]> {
     return this._httpClient.get<ClassInfo[]>(`${this.BASE_URL}/included`);
+  }
+
+  addClass(classs: Class): Observable<Class> {
+    return this._httpClient.post<Class>(`${this.BASE_URL}`, classs);
+  }
+
+  deleteClassById(id: number): Observable<Class> {
+    return this._httpClient.delete<Class>(`${this.BASE_URL}/${id}`);
+  }
+
+  updateClass(classs: Class): Observable<Class> {
+    return this._httpClient.put<Class>(`${this.BASE_URL}`, classs);
   }
 }

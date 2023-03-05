@@ -43,7 +43,8 @@ export class CreatePupilComponent implements OnInit, OnDestroy {
         email: '',
         class: {
           id: 0,
-          name: ''
+          name: '',
+          classProfileId: 0
         },
         address: '',
         birthDate: new Date(),

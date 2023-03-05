@@ -10,7 +10,7 @@ import { Teacher } from '../dtos/teacher.dto';
   providedIn: 'root'
 })
 export class HttpService {
-  BASE_URL: string = "https://localhost:7288/api"
+  BASE_URL: string = "https://localhost:8081/api"
 
   constructor(private http: HttpClient) { }
 
