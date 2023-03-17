@@ -29,6 +29,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { AdminClassesComponent } from './admin-classes/admin-classes.component';
 import { MatCardModule } from '@angular/material/card';
 import { ManageClassComponent } from './manage-class/manage-class.component';
+import { AdminTeachersComponent } from './admin-teachers/admin-teachers.component';
+import { ManageTeacherComponent } from './manage-teacher/manage-teacher.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { ManageClassComponent } from './manage-class/manage-class.component';
     AdminPupilsComponent,
     CreatePupilComponent,
     AdminClassesComponent,
-    ManageClassComponent
+    ManageClassComponent,
+    AdminTeachersComponent,
+    ManageTeacherComponent
   ],
   imports: [
     CommonModule,

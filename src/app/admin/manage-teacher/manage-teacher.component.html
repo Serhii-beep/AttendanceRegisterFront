@@ -1,0 +1,40 @@
+<mat-dialog-content>
+    <div class="wrapper">
+        <form [formGroup]="teacherForm">
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>ПІБ</mat-label>
+                <input matInput placeholder="ПІБ вчителя"
+                    formControlName="fullNameControl" required
+                    [(ngModel)]="teacher.fullName"
+                    autocomplete="off">
+                <mat-error *ngIf="teacherForm.get('fullNameControl')?.invalid">Це поле є обов'язковим</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Електронна адреса"
+                    formControlName="emailControl" required
+                    type="email"
+                    [(ngModel)]="teacher.email"
+                    autocomplete="off">
+                <mat-error *ngIf="teacherForm.get('emailControl')?.invalid">{{ getEmailValidationError() }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>Ім'я користувача</mat-label>
+                <input matInput placeholder="Ім'я користувача"
+                    formControlName="loginControl"
+                    [(ngModel)]="teacher.login"
+                    autocomplete="off">
+                <mat-error *ngIf="teacherForm.get('loginControl')?.invalid">Це поле є обов'язковим</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>Пароль</mat-label>
+                <input matInput placeholder="Пароль"
+                    formControlName="passwordControl"
+                    type="password"
+                    [(ngModel)]="teacher.password">
+                <mat-error *ngIf="teacherForm.get('passwordControl')?.invalid">Це поле є обов'язковим</mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="accent" (click)="btnSubmitClick()">{{ resultButtonText}}</button>
+        </form>
+    </div>
+</mat-dialog-content>

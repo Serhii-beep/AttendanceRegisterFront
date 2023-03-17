@@ -4,4 +4,5 @@ export interface Teacher {
     password: string;
     fullName: string;
     email: string;
+    role: string;
 }

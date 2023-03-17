@@ -43,6 +43,7 @@
                         <mat-label>Email</mat-label>
                         <input matInput placeholder="Електронна адреса"
                             formControlName="emailControl" required
+                            type="email"
                             [(ngModel)]="pupil.email"
                             autocomplete="off">
                         <mat-error *ngIf="accountDataForm.get('emailControl')?.invalid">{{ getEmailValidationError() }}</mat-error>
@@ -51,7 +52,6 @@
                         <mat-label>Ім'я користувача</mat-label>
                         <input matInput placeholder="Ім'я користувача"
                             formControlName="loginControl"
-                            type="email"
                             [(ngModel)]="pupil.login"
                             autocomplete="off">
                         <mat-error *ngIf="accountDataForm.get('loginControl')?.invalid">Це поле є обов'язковим</mat-error>
