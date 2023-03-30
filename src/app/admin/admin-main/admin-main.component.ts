@@ -18,66 +18,10 @@ export class AdminMainComponent implements OnInit {
     if(admin) {
       this.currentUser = JSON.parse(admin);
     }
-    var tabsNewAnim = $("#navbar-animmenu");
-    var activeItemNewAnim = tabsNewAnim.find(".active");
-    var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
-    var itemPosNewAnimLeft = activeItemNewAnim.position();
-    $(".hori-selector").css({
-      left: itemPosNewAnimLeft.left + "px",
-      width: activeWidthNewAnimWidth + "px"
+    $('.nav-item').on('click', function(e) {
+      $('.nav-item').removeClass("active");
+      $(this).addClass('active');
     });
-    $("#navbar-animmenu").on("click", "li", function (e) {
-      $("#navbar-animmenu ul li").removeClass("active");
-      $(this).addClass("active");
-      var activeWidthNewAnimWidth = $(this).innerWidth();
-      var itemPosNewAnimLeft = $(this).position();
-      $(".hori-selector").css({
-        left: itemPosNewAnimLeft.left + "px",
-        width: activeWidthNewAnimWidth + "px"
-      });
-    });
-    this.router.events.subscribe((event: Event) => {
-      if(event instanceof NavigationEnd) {
-        $("#navbar-animmenu ul li").removeClass("active");
-        if(event.url.includes("pupils")) {
-          var el = $("#pupils");
-          el.addClass("active");
-          var activeWidthNewAnimWidth = el.innerWidth();
-          var itemPosNewAnimLeft = el.position();
-          $(".hori-selector").css({
-            left: itemPosNewAnimLeft.left + "px",
-            width: activeWidthNewAnimWidth + "px"
-          });
-        } else if(event.url.includes("teachers")) {
-          var el = $("#teachers");
-          el.addClass("active");
-          var activeWidthNewAnimWidth = el.innerWidth();
-          var itemPosNewAnimLeft = el.position();
-          $(".hori-selector").css({
-            left: itemPosNewAnimLeft.left + "px",
-            width: activeWidthNewAnimWidth + "px"
-          });
-        } else if(event.url.includes("classes")) {
-          var el = $("#classes");
-          el.addClass("active");
-          var activeWidthNewAnimWidth = el.innerWidth();
-          var itemPosNewAnimLeft = el.position();
-          $(".hori-selector").css({
-            left: itemPosNewAnimLeft.left + "px",
-            width: activeWidthNewAnimWidth + "px"
-          });
-        } else if(event.url.includes("subjects")) {
-          var el = $("#subjects");
-          el.addClass("active");
-          var activeWidthNewAnimWidth = el.innerWidth();
-          var itemPosNewAnimLeft = el.position();
-          $(".hori-selector").css({
-            left: itemPosNewAnimLeft.left + "px",
-            width: activeWidthNewAnimWidth + "px"
-          });
-        }
-      }
-    })
   }
 
   logout(): void {
