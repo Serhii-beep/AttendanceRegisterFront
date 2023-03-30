@@ -1,108 +1,57 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap');
 
-#navbar-animmenu {
-  background: #111128;
-  overflow: hidden;
-  position: relative;
-  padding: 10px 0;
-  width: 100%;
-  height: 90px;
-}
+.navbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-height: 80px;
+  background-color: #111128;
 
-#navbar-animmenu li {
-  list-style-type: none;
-  float: left;
-  min-width: 150px;
-  text-align: center;
-}
+  .nav-item {
+    margin-left: 30px;
+    width: 130px;
+    padding: 0 15px;
+    height: 80px;
+    display: flex;
+    align-items: center;
 
-#navbar-animmenu ul li a {
-  color: #FFFFFF;
-  text-decoration: none;
-  font-size: 15px;
-  line-height: 45px;
-  display: block;
-  padding: 0 20px;
-  transition-duration: .6s;
-  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  position: relative;
-}
+    a {
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      color: #FFFFFF;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      font-size: 18px;
+      .ico {
+        margin-left: 10px;
+      }
+    }
+  }
 
-#navbar-animmenu > ul > li.active > a {
-  color: #585E71;
-  background-color: transparent;
-  transition: all 0.7s;
-}
+  .active {
+    background-image: url('../images/navim4.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: 7px 5px;
+    transition: .7s linear;
+    a {
+      color: #111128;
+    }
+  }
 
-#navbar-animmenu a:not(:only-child):after {
-	content: "\f105";
-	position: absolute;
-	right: 20px;
-	top: 10%;
-	font-size: 14px;
-	font-family: "Font Awesome 5 Free";
-	display: inline-block;
-	padding-right: 3px;
-	vertical-align: middle;
-	font-weight: 900;
-	transition: 0.5s;
-}
+  .first {
+    margin-left: 70px;
+  }
 
-#navbar-animmenu .active>a:not(:only-child):after {
-	transform: rotate(90deg);
-}
-
-.hori-selector {
-  display: inline-block;
-  position: absolute;
-  height: 100%;
-  top: 10px;
-  left: 0;
-  transition-duration: .6s;
-  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  background-color: #fff;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-}
-
-.hori-selector .right,
-.hori-selector .left {
-  position: absolute;
-  width: 25px;
-  height: 25px;
-  background-color: #fff;
-  bottom: 10px;
-}
-
-.hori-selector .right {
-  right: -25px;
-}
-
-.hori-selector .left {
-  left: -25px;
-}
-
-.hori-selector .right:before,
-.hori-selector  .left:before {
-  content: '';
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: #585E71;
-}
-
-.hori-selector .right:before {
-  bottom: 0;
-  right: -25px;
-}
-
-.hori-selector .left:before {
-  bottom: 0;
-  left: -25px;
+  .last {
+    width: 165px;
+  }
 }
 
 .btn__profile {
+  margin-left: auto;
   right: 20px;
   bottom: 10px;
   background: transparent;
@@ -111,9 +60,7 @@
   background-image: url('../images/profile_ellipse.png');
   background-repeat: no-repeat;
   width: 75px;
-  height: 60px;
+  height: 80px;
   border: none;
   outline: none;
-  position: absolute;
-  bottom: 10px;
 }

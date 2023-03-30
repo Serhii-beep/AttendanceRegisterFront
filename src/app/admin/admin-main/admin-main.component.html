@@ -1,22 +1,8 @@
-<div id="navbar-animmenu">
-  <ul class="show-dropdown main-navbar">
-    <div class="hori-selector">
-      <div class="left"></div>
-      <div class="right"></div>
-    </div>
-    <li class="active" id="pupils">
-      <a [routerLink]="'pupils'"><mat-icon>person</mat-icon> Учні</a>
-    </li>
-    <li id="teachers">
-      <a [routerLink]="'teachers'"><mat-icon>school</mat-icon> Вчителі</a>
-    </li>
-    <li id="classes">
-      <a [routerLink]="'classes'"><mat-icon>people</mat-icon> Класи</a>
-    </li>
-    <li id="subjects">
-      <a [routerLink]="'subjects'"><mat-icon>import_contacts</mat-icon> Предмети</a>
-    </li>
-  </ul>
+<div class="navbar">
+  <div class="nav-item active first"><a [routerLink]="'pupils'">Учні <mat-icon class="ico">person</mat-icon></a></div>
+  <div class="nav-item"><a [routerLink]="'teachers'">Вчителі <mat-icon class="ico">school</mat-icon></a></div>
+  <div class="nav-item"><a [routerLink]="'classes'">Класи<mat-icon class="ico">people</mat-icon></a></div>
+  <div class="nav-item last"><a [routerLink]="'subjects'">Предмети <mat-icon class="ico">import_contacts</mat-icon></a></div>
   <button [mat-menu-trigger-for]="menu" class="btn__profile">{{ currentUser.login[0] }}</button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="logout()">
