@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   AuthorizationForm!: FormGroup;
-  user: UserAuthorizationDto = {username: '', password: '', role: 'pupil'};
+  user: UserAuthorizationDto = {username: '', password: ''};
   loginSubscr!: Subscription;
 
   constructor(private formBuilder: FormBuilder,
@@ -30,37 +30,27 @@ export class LoginComponent implements OnInit, OnDestroy {
     })
   }
 
-  login(): void {
+  async login() {
     if(this.AuthorizationForm.invalid) {
       return;
     }
     localStorage.removeItem('userToken');
     localStorage.removeItem('currentUser');
     localStorage.removeItem('userRole');
-    switch(this.user.role) {
+    const resp = await this.httpService.loginAdmin(this.user).toPromise();
+    localStorage.setItem('userToken', resp.token);
+    localStorage.setItem('currentUser', JSON.stringify(resp.user));
+    localStorage.setItem('userRole', resp.user.role);
+    const role = localStorage.getItem('userRole');
+    switch(role) {
       case 'admin': {
-        this.loginSubscr = this.httpService.loginAdmin(this.user).subscribe((resp: any) => {
-          localStorage.setItem('userToken', resp.token);
-          localStorage.setItem('currentUser', JSON.stringify(resp.user));
-          localStorage.setItem('userRole', 'admin');
-          this.router.navigate(['admin/pupils']);
-        }, error => this.setUserError(error));
+        this.router.navigate(['admin/pupils']);
         break;
       }
       case 'pupil': {
-        this.loginSubscr = this.httpService.loginPupil(this.user).subscribe((resp: any) => {
-          localStorage.setItem('userToken', resp.token);
-          localStorage.setItem('currentUser', JSON.stringify(resp.user));
-          localStorage.setItem('userRole', 'pupil');
-        }, error => this.setUserError(error));
         break;
       }
       case 'teacher': {
-        this.loginSubscr = this.httpService.loginTeacher(this.user).subscribe((resp: any) => {
-          localStorage.setItem('userToken', resp.token);
-          localStorage.setItem('currentUser', JSON.stringify(resp.user));
-          localStorage.setItem('userRole', 'teacher');
-        }, error => this.setUserError(error));
         break;
       }
     }

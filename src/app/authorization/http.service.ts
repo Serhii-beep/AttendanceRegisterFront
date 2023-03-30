@@ -17,12 +17,4 @@ export class HttpService {
   loginAdmin(user: UserAuthorizationDto): Observable<any> {
     return this.http.post<any>(`${this.BASE_URL}/Admins/authenticate`, user);
   }
-
-  loginPupil(user: UserAuthorizationDto): Observable<any> {
-    return this.http.post<any>(`${this.BASE_URL}/Pupils/authenticate`, user);
-  }
-
-  loginTeacher(user: UserAuthorizationDto): Observable<any> {
-    return this.http.post<any>(`${this.BASE_URL}/Admins/authenticate`, user);
-  }
 }

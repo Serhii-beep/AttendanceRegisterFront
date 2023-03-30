@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 #navbar-animmenu {
-  background: #585E71;
+  background: #111128;
   overflow: hidden;
   position: relative;
   padding: 10px 0;
   width: 100%;
+  height: 90px;
 }
 
 #navbar-animmenu li {
@@ -16,7 +17,7 @@
 }
 
 #navbar-animmenu ul li a {
-  color: rgba(0, 0, 0, .5);
+  color: #FFFFFF;
   text-decoration: none;
   font-size: 15px;
   line-height: 45px;
@@ -102,8 +103,17 @@
 }
 
 .btn__profile {
-  float: right;
   right: 20px;
   bottom: 10px;
-  background-color: #E5DED8;
+  background: transparent;
+  box-shadow: none;
+  color: #111128;
+  background-image: url('../images/profile_ellipse.png');
+  background-repeat: no-repeat;
+  width: 75px;
+  height: 60px;
+  border: none;
+  outline: none;
+  position: absolute;
+  bottom: 10px;
 }

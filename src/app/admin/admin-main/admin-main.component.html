@@ -5,16 +5,19 @@
       <div class="right"></div>
     </div>
     <li class="active" id="pupils">
-      <a [routerLink]="'pupils'"><mat-icon>people</mat-icon> Учні</a>
+      <a [routerLink]="'pupils'"><mat-icon>person</mat-icon> Учні</a>
     </li>
     <li id="teachers">
       <a [routerLink]="'teachers'"><mat-icon>school</mat-icon> Вчителі</a>
     </li>
     <li id="classes">
-      <a [routerLink]="'classes'"><mat-icon>class</mat-icon> Класи</a>
+      <a [routerLink]="'classes'"><mat-icon>people</mat-icon> Класи</a>
+    </li>
+    <li id="subjects">
+      <a [routerLink]="'subjects'"><mat-icon>import_contacts</mat-icon> Предмети</a>
     </li>
   </ul>
-  <button mat-fab [mat-menu-trigger-for]="menu" class="btn__profile">{{ currentUser.login[0] }}</button>
+  <button [mat-menu-trigger-for]="menu" class="btn__profile">{{ currentUser.login[0] }}</button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="logout()">
       <mat-icon>logout</mat-icon> 

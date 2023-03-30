@@ -1,33 +1,25 @@
 <div class="container">
+    <div class="vector"></div>
     <form class="login" [formGroup]="AuthorizationForm" (submit)="login()">
-        <mat-form-field class="inputField" appearance="outline">
-            <mat-label class="label">Username</mat-label>
-            <input matInput 
-                formControlName="login"
+        <div class="input__wrapper">
+            <input formControlName="login"
+                id="login"
                 [(ngModel)]="user.username"
-                placeholder="Enter your username"
-                class="input" 
-                autocomplete="off">
-            <mat-error *ngIf="AuthorizationForm.get('login')?.invalid">This field is required</mat-error>
-        </mat-form-field>
-        <mat-form-field class="inputField" appearance="outline">
-            <mat-label class="label">Password</mat-label>
-            <input matInput 
-                formControlName="password"
-                [(ngModel)]="user.password"
-                type="password"
                 class="input"
-                placeholder="Enter your password">
-                <mat-error *ngIf="AuthorizationForm.get('password')?.invalid">This field is required</mat-error>
-        </mat-form-field>
-        <mat-form-field class="inputField" appearance="outline">
-            <mat-label class="label">Choose your role</mat-label>
-            <mat-select [(value)]="user.role" class="input">
-                <mat-option value="admin">Administrator</mat-option>
-                <mat-option value="teacher">Teacher</mat-option>
-                <mat-option value="pupil">Pupil</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <button class="btn" type="submit" mat-raised-button color="primary" >Login</button>
+                required
+                autocomplete="off">
+            <label class="label" for="login">Ім'я користувача</label>
+        </div>
+        <div class="input__wrapper">
+            <input formControlName="password"
+                id="password"
+                type="password"
+                [(ngModel)]="user.password"
+                class="input pass"
+                required
+                autocomplete="off">
+            <label class="label" for="password">Пароль</label>
+        </div>
+        <button type="submit" class="btn">Увійти <mat-icon>login</mat-icon></button>
     </form>
 </div>

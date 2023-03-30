@@ -66,6 +66,15 @@ export class AdminMainComponent implements OnInit {
             left: itemPosNewAnimLeft.left + "px",
             width: activeWidthNewAnimWidth + "px"
           });
+        } else if(event.url.includes("subjects")) {
+          var el = $("#subjects");
+          el.addClass("active");
+          var activeWidthNewAnimWidth = el.innerWidth();
+          var itemPosNewAnimLeft = el.position();
+          $(".hori-selector").css({
+            left: itemPosNewAnimLeft.left + "px",
+            width: activeWidthNewAnimWidth + "px"
+          });
         }
       }
     })

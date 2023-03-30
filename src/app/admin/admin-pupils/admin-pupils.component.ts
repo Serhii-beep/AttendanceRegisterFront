@@ -16,17 +16,16 @@ import { PupilsService } from '../services/pupils.service';
   styleUrls: ['./admin-pupils.component.scss']
 })
 export class AdminPupilsComponent implements OnInit, AfterViewInit, OnDestroy {
-  isLoadingResults = true;
-
   pupils: Pupil[] = [];
+  filteredPupils: Pupil[] = [];
+  checkedPupils = [{id: 0, checked: false}];
   pupilsLength = 0;
   pupilsFilter = "";
   pupilsSubscr!: Subscription;
   deletePupilSub!: Subscription;
-  displayedColumns: string[] = ['fullName', 'email', 'class', 'address', 'birthDate', 'delete'];
+  displayedColumns: string[] = ['Клас', 'Прізвище', 'Ім\'я', 'По-батькові', 'Пошта', 'Адреса', 'Дата народження'];
   classId!: number;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  page = 0;
 
   constructor(private pupilsService: PupilsService,
     public dialog: MatDialog,
@@ -47,31 +46,15 @@ export class AdminPupilsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getPupils(classId?: number, fullName?: string) {
-    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-    merge(this.sort.sortChange, this.paginator.page).pipe(
-      startWith({}),
-      switchMap(() => {
-        this.isLoadingResults = true;
-        return this.pupilsService.getAllPupilsPaginated(this.sort.direction, this.paginator.pageIndex, 30)
-          .pipe(catchError(() => observableOf(null)));
-      }),
-      map(data => {
-        this.isLoadingResults = false;
-        if(data == null) {
-          return [];
-        }
-        this.pupilsLength = data.length;
-        return data;
-      })
-    ).subscribe(data => {
-      this.pupils = data;
-      if(classId && classId != -1) {
-        this.pupils = this.pupils.filter(p => p.class.id == classId);
-      }
-      if(fullName) {
-        this.pupils = this.pupils.filter(p => p.fullName.toLowerCase().includes(fullName.toLowerCase()));
-      }
+    this.pupilsSubscr = this.pupilsService.getAllPupilsPaginated('desc', this.page, 30).subscribe((resp) => {
+      console.log(resp);
+      this.pupils = resp;
+      this.filteredPupils = this.pupils;
       this.pupilsLength = this.pupils.length;
+      this.checkedPupils = [];
+      this.pupils.forEach(p => {
+        this.checkedPupils.push({id: p.id, checked: false});
+      })
     });
   }
 
@@ -79,6 +62,11 @@ export class AdminPupilsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.classId = -1;
     this.pupilsFilter = "";
     this.getPupils();
+  }
+
+  filterPupils() {
+    if(!this.pupilsFilter) {}
+    this.filteredPupils = this.pupils.filter(p => p.fullName.toLowerCase().includes(this.pupilsFilter.toLowerCase()));
   }
 
   editPupil(pupil: Pupil) {

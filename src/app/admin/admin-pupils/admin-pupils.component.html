@@ -1,55 +1,47 @@
 <div class="wrapper">
-    <div class="container mat-elevation-z8">
-        <div class="loading-shade"
-            *ngIf="isLoadingResults">
-            <mat-spinner></mat-spinner>
-        </div>
-        <div class="tools">
-            <input type="text" class="input" placeholder="Введіть ім'я учня" [(ngModel)]="pupilsFilter">
-            <div class="search" (click)="getPupils(classId, pupilsFilter)">
-                <mat-icon class="search__icon">search</mat-icon>
+    <div class="container">
+        <div class="search-container">
+            <div class="search">
+                <input type="text" class="search-input" placeholder="Пошук" 
+                    (keyup)="filterPupils()"
+                    [(ngModel)]="pupilsFilter">
+                <mat-icon class="search-icon">search</mat-icon>
             </div>
-            <button (click)="addPupil()" class="btn__add" mat-raised-button color="accent"><mat-icon>add</mat-icon> Додати учня</button>
-            <button (click)="clearFilters()" class="btn__clear" mat-raised-button color="accent"><mat-icon>clear_all</mat-icon> Очистити фільтри</button>
         </div>
-        <mat-divider inset></mat-divider>
-        <div class="table-container">
-            <table mat-table [dataSource]="pupils"
-                matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
-                <ng-container matColumnDef="fullName">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>П.І.Б</th>
-                    <td mat-cell *matCellDef="let row">{{ row.fullName }}</td>
-                </ng-container>
-                <ng-container matColumnDef="email">
-                    <th mat-header-cell *matHeaderCellDef>Email</th>
-                    <td mat-cell *matCellDef="let row">{{ row.email }}</td>
-                </ng-container>
-                <ng-container matColumnDef="class">
-                    <th mat-header-cell *matHeaderCellDef>Клас</th>
-                    <td mat-cell *matCellDef="let row">{{ row.class.name }}</td>
-                </ng-container>
-                <ng-container matColumnDef="address">
-                    <th mat-header-cell *matHeaderCellDef>Адреса</th>
-                    <td mat-cell *matCellDef="let row">{{ row.address }}</td>
-                </ng-container>
-                <ng-container matColumnDef="birthDate">
-                    <th mat-header-cell *matHeaderCellDef>Дата народження</th>
-                    <td mat-cell *matCellDef="let row">{{ row.birthDate | date : "longDate" }}</td>
-                </ng-container>
-                <ng-container matColumnDef="delete">
-                    <th mat-header-cell *matHeaderCellDef></th>
-                    <td mat-cell *matCellDef="let row">
-                        <mat-icon (click)="deletePupil(row.id)" class="ico">delete</mat-icon>
-                        <span class="divider"></span>
-                        <mat-icon class="ico" (click)="editPupil(row)">edit</mat-icon>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
+        <div class="tools_btns">
+            <button>Видалити учнів <mat-icon class="ico">delete</mat-icon></button>
+            <button (click)="addPupil()">Додати учня <mat-icon class="ico">add</mat-icon></button>
         </div>
-        <mat-paginator [length]="pupilsLength" [pageSize]="30"></mat-paginator>
-    </div>
+        <div class="table">
+            <div class="header-row">
+                <div class="header" *ngFor="let column of displayedColumns">{{ column }}</div>
+            </div>
+            <div class="row" *ngFor="let pupil of filteredPupils; let i = index"
+                [class.selected-row]="checkedPupils[i].checked">
+                <div class="checkbox-container">
+                    <input type="checkbox" class="checkbox" [id]="pupil.id"
+                        [(ngModel)]="checkedPupils[i].checked">
+                    <label [for]="pupil.id">
+                    </label>
+                </div>
+                <div class="cell">{{ pupil.class.name }}</div>
+                <div class="cell">{{ pupil.fullName.split(' ')[0] }}</div>
+                <div class="cell">{{ pupil.fullName.split(' ')[1] }}</div>
+                <div class="cell">{{ pupil.fullName.split(' ')[2] }}</div>
+                <div class="cell">{{ pupil.email }}</div>
+                <div class="cell">{{ pupil.address }}</div>
+                <div class="cell">{{ pupil.birthDate | date }}</div>
+                <div class="button-container">
+                    <button class="icon-button" (click)="editPupil(pupil)"><mat-icon>edit</mat-icon></button>
+                    <button class="icon-button" (click)="deletePupil(pupil.id)"><mat-icon>delete</mat-icon></button>
+                </div>
+            </div>
+            <div class="paginator">
+                <p class="page-index">Сторінка: {{ page + 1 }}</p>
+                <button class="arrow"><mat-icon class="arrow_icon">arrow_left</mat-icon></button>
+                <button class="arrow"><mat-icon class="arrow_icon">arrow_right</mat-icon></button>
+            </div>
+        </div>
     <div class="alert">
         <div class="alert-container">
             <p>Ви впевнені, що хочете видалити цього учня?</p>
