@@ -1,43 +1,57 @@
 <div class="wrapper">
-    <div class="container mat-elevation-z8">
-        <div class="loading-shade"
-            *ngIf="isLoadingResults">
+    <div class="container">
+        <div class="search-container">
+            <div class="search">
+                <input type="text" class="search-input" placeholder="Пошук" 
+                    (keyup)="filterTeachers()"
+                    [(ngModel)]="teachersFilter">
+                <mat-icon class="search-icon">search</mat-icon>
+            </div>
+            <div class="dropdown-container">
+                <div class="dropdown">Сортувати за <mat-icon>keyboard_arrow_down</mat-icon></div>
+                <div class="options-wrapper">
+                    <div class="dropdown-arrow"></div>
+                    <div class="options">
+                        <div class="option">Спаданням <mat-icon class="arrow_icon">arrow_downward</mat-icon></div>
+                        <div class="option">Зростанням <mat-icon class="arrow_icon">arrow_upward</mat-icon></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tools_btns">
+            <button (click)="deleteRange()">Видалити вчителів <mat-icon class="ico">delete</mat-icon></button>
+            <button (click)="addTeacher()">Додати вчителя <mat-icon class="ico">add</mat-icon></button>
+        </div>
+        <div *ngIf="isLoading" class="progress">
             <mat-spinner></mat-spinner>
         </div>
-        <div class="tools">
-            <input type="text" class="input" placeholder="Введіть ім'я вчителя" [(ngModel)]="teachersFilter">
-            <div class="search" (click)="getTeachers(teachersFilter)">
-                <mat-icon class="search__icon">search</mat-icon>
+        <div class="table">
+            <div class="header-row">
+                <div class="header" *ngFor="let column of displayedColumns">{{ column }}</div>
             </div>
-            <button (click)="addTeacher()" class="btn__add" mat-raised-button color="accent"><mat-icon>add</mat-icon> Додати вчителя</button>
-            <button (click)="clearFilters()" class="btn__clear" mat-raised-button color="accent"><mat-icon>clear_all</mat-icon> Очистити фільтри</button>
+            <div class="row" *ngFor="let teacher of filteredTeachers; let i = index"
+                [class.selected-row]="checkedTeachers[i].checked">
+                <div class="checkbox-container">
+                    <input type="checkbox" class="checkbox" [id]="teacher.id"
+                        [(ngModel)]="checkedTeachers[i].checked">
+                    <label [for]="teacher.id">
+                    </label>
+                </div>
+                <div class="cell">{{ teacher.fullName.split(' ')[0] }}</div>
+                <div class="cell">{{ teacher.fullName.split(' ')[1] }}</div>
+                <div class="cell">{{ teacher.fullName.split(' ')[2] }}</div>
+                <div class="cell">{{ teacher.email }}</div>
+                <div class="button-container">
+                    <button class="icon-button" (click)="editTeacher(teacher)"><mat-icon>edit</mat-icon></button>
+                    <button class="icon-button" (click)="deleteTeacher(teacher.id)"><mat-icon>delete</mat-icon></button>
+                </div>
+            </div>
+            <div class="paginator">
+                <p class="page-index">Сторінка: {{ page + 1 }}</p>
+                <button class="arrow"><mat-icon class="arrow_icon">arrow_left</mat-icon></button>
+                <button class="arrow"><mat-icon class="arrow_icon">arrow_right</mat-icon></button>
+            </div>
         </div>
-        <mat-divider inset></mat-divider>
-        <div class="table-container">
-            <table mat-table [dataSource]="teachers"
-                matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
-                <ng-container matColumnDef="fullName">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>П.І.Б</th>
-                    <td mat-cell *matCellDef="let row">{{ row.fullName }}</td>
-                </ng-container>
-                <ng-container matColumnDef="email">
-                    <th mat-header-cell *matHeaderCellDef>Email</th>
-                    <td mat-cell *matCellDef="let row">{{ row.email }}</td>
-                </ng-container>
-                <ng-container matColumnDef="delete">
-                    <th mat-header-cell *matHeaderCellDef></th>
-                    <td mat-cell *matCellDef="let row">
-                        <mat-icon class="ico" (click)="deleteTeacher(row.id)">delete</mat-icon>
-                        <span class="divider"></span>
-                        <mat-icon class="ico" (click)="editTeacher(row)">edit</mat-icon>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-        </div>
-        <mat-paginator [length]="teachersLength" [pageSize]="30"></mat-paginator>
-    </div>
     <div class="alert">
         <div class="alert-container">
             <p>Ви впевнені, що хочете видалити цього вчителя?</p>

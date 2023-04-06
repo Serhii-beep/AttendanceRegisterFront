@@ -1,34 +1,44 @@
-<div class="filter__wrapper">
-    <div class="filter">
-        <div class="input__container">
-            <input type="text" class="input" placeholder="Введіть назву класу" [(ngModel)]="filterClass">
-            <select [(ngModel)]="selectedProfile">
-                <option value="Any">Всі профілі</option>
-                <option *ngFor="let profile of profiles" [value]="[profile.profileName]">
-                    {{ profile.profileName }}
-                </option>
-            </select>
+<div class="classes-wrapper">
+    <div class="search-container">
+        <div class="search">
+            <input type="text" class="search-input" placeholder="Пошук"
+                [(ngModel)]="filterClass"
+                (keyup)="filter()">
+            <mat-icon class="search-icon">search</mat-icon>
         </div>
-        <div class="search" (click)="filter()">
-            <mat-icon class="search__icon">search</mat-icon>
-        </div>
-        <button class="btn__add" (click)="addClass()" mat-raised-button color="accent"><mat-icon>add</mat-icon> Додати клас</button>
+        <button (click)="addClass()" class="btn-add">Додати клас <mat-icon class="i">add</mat-icon></button>
     </div>
-</div>
-<div class="wrapper">
-    <mat-card *ngFor="let class of filteredClasses"
-        class="card"
-        (click)="openPupils(class.id)">
-        <mat-card-title>{{ class.name }}</mat-card-title>
-        <mat-card-subtitle>Профіль: {{ class.profileName }}</mat-card-subtitle>
-        <mat-card-content>Кількість учнів: {{ class.numberOfPupils }}</mat-card-content>
-        <mat-divider inset></mat-divider>
-        <mat-card-actions class="actions">
-            <mat-icon class="icon" (click)="editClass($event, class)">edit</mat-icon>
-            <mat-divider inset vertical class="divider"></mat-divider>
-            <mat-icon class="icon" (click)="deleteClass($event, class.id)">delete</mat-icon>
-        </mat-card-actions>
-    </mat-card>
+    <div *ngFor="let class of filteredClasses" class="class-profile" data-aos="fade-up-right"
+        data-aos-duration="1250">
+        <div *ngIf="class.cl.length > 0" class="class-profile-header">
+            <div class="class-profile-header-num">{{ class.num }}</div>
+            <div class="class-profile-header-line"></div>
+        </div>
+        <div class="class-profile-classes">
+            <div *ngFor="let cl of class.cl" class="class-profile-classes-card">
+                <div class="class-profile-classes-card-header">
+                    <div class="cl"><div class="cl-text">{{ cl.name }}</div></div>
+                    <div class="num-pupils">
+                        Кількість <br>учнів: <span class="num-pupils-num">{{ cl.numberOfPupils }}</span>
+                    </div>
+                </div>
+                <div class="class-profile-classes-card-content">
+                    <div class="divider"></div>
+                    <p class="text-1">Профіль:</p>
+                    <p class="text-2">{{ cl.profileName }}</p>
+                    <div class="divider"></div>
+                    <p class="text-1">Класний керівник:</p>
+                    <p class="text-2">{{ cl.supervisor }}</p>
+                    <div class="divider"></div>
+                </div>
+                <div class="class-profile-classes-card-footer">
+                    <button class="btn"><mat-icon (click)="editClass($event, cl)" class="ico">edit</mat-icon></button>
+                    <button class="btn"><mat-icon (click)="deleteClass($event, cl.id)" class="ico">delete</mat-icon></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="observe"></div>
 </div>
 <div class="alert">
     <div class="alert-container">

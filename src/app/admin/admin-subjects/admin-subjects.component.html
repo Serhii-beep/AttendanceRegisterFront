@@ -1,3 +1,49 @@
 <div class="wrapper">
-    
+    <div class="search-container">
+        <div class="search">
+            <input type="text" class="search-input" placeholder="Пошук">
+            <mat-icon class="search-icon">search</mat-icon>
+        </div>
+        <div class="dropdown-container">
+            <div class="dropdown">Сортувати за <mat-icon>keyboard_arrow_down</mat-icon></div>
+            <div class="options-wrapper">
+                <div class="dropdown-arrow"></div>
+                <div class="options">
+                    <div class="option">Спаданням <mat-icon class="arrow_icon">arrow_downward</mat-icon></div>
+                    <div class="hdivider"></div>
+                    <div class="option">Зростанням <mat-icon class="arrow_icon">arrow_upward</mat-icon></div>
+                </div>
+            </div>
+        </div>
+        <button class="btn-add">Додати предмет <mat-icon class="i">add</mat-icon></button>
+    </div>
+    <div class="table">
+        <div class="header-row">
+            <div class="header" *ngFor="let column of displayedColumns">{{ column }}</div>
+        </div>
+        <div class="row" *ngFor="let subject of subjects">
+            <div class="cell">{{ subject.name }}</div>
+            <div class="divider"></div>
+            <div class="cell teachers">
+                <div class="text teachers" *ngFor="let teacher of subject.teachers">
+                    {{ teacher.fullName.split(' ')[0] }}
+                    {{ teacher.fullName.split(' ')[1]?.charAt(0) }}.
+                    {{ teacher.fullName.split(' ')[2]?.charAt(0) }}.
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="cell classes">
+                <div class="text classes" *ngFor="let class of subject.classes">
+                    {{ class.name }}
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="button-container">
+                <button class="icon-button"><mat-icon>edit</mat-icon></button>
+                <div class="divider"></div>
+                <button class="icon-button"><mat-icon>delete</mat-icon></button>
+            </div>
+            <div class="divider"></div>
+        </div>
+    </div>
 </div>

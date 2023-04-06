@@ -9,20 +9,25 @@ import { Teacher } from 'src/app/dtos/teacher.dto';
 import { ManageTeacherComponent } from '../manage-teacher/manage-teacher.component';
 import { TeachersService } from '../services/teachers.service';
 
+import * as $ from 'jquery';
+
 @Component({
   selector: 'app-admin-teachers',
   templateUrl: './admin-teachers.component.html',
   styleUrls: ['./admin-teachers.component.scss']
 })
 export class AdminTeachersComponent implements OnInit, AfterViewInit, OnDestroy {
-  isLoadingResults = true;
+  isLoading = true;
 
   teachers: Teacher[] = [];
   teachersLength = 0;
   teachersSub!: Subscription;
-  displayedColumns = ['fullName', 'email', 'delete'];
+  displayedColumns = ['Прізвище', 'Ім\'я', 'По-батькові', 'Пошта'];
   teachersFilter = "";
+  checkedTeachers = [{id: 0, checked: false}];
   deleteTeacherSub!: Subscription;
+  page = 0;
+  filteredTeachers: Teacher[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -31,6 +36,32 @@ export class AdminTeachersComponent implements OnInit, AfterViewInit, OnDestroy 
     private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    $(".dropdown").on("mouseenter", function() {
+      $(".options-wrapper").addClass("active");
+    });
+
+    $(".dropdown").on("mouseout", function(e) {
+      if(!$(e.relatedTarget!).hasClass("options-wrapper")) {
+        $(".options-wrapper").removeClass("active");
+      }
+    });
+
+    $(".options-wrapper").on("mouseleave", function() {
+      $(".options-wrapper").removeClass("active");
+    });
+
+    $(".option").on("mouseover", function() {
+      if($(".options-wrapper").hasClass("active")) {
+        $(".option").css('cursor', 'pointer');
+        $(".arrow_icon", this).addClass("active");
+      } else {
+        $(".option").css('cursor', 'default');
+      }
+    });
+
+    $(".option").on("mouseout", function() {
+      $(".arrow_icon").removeClass("active");
+    });
   }
 
   ngAfterViewInit(): void {
@@ -38,34 +69,21 @@ export class AdminTeachersComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   getTeachers(fullName?: string) {
-    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-    merge(this.sort.sortChange, this.paginator.page).pipe(
-      startWith({}),
-      switchMap(() => {
-        this.isLoadingResults = true;
-        return this.teacherService.getAllteachersPaginated(this.sort.direction, this.paginator.pageIndex, 30)
-          .pipe(catchError(() => observableOf(null)));
-      }),
-      map(data => {
-        this.isLoadingResults = false;
-        if(data == null) {
-          return [];
-        }
-        this.teachersLength = data.length;
-        return data;
-      })
-    ).subscribe(data => {
-      this.teachers = data;
-      if(fullName) {
-        this.teachers = this.teachers.filter(t => t.fullName.toLowerCase().includes(fullName.toLocaleLowerCase()));
-      }
+    this.isLoading = true;
+    this.teachersSub = this.teacherService.getAllteachersPaginated('desc', this.page, 30).subscribe((resp) => {
+      this.teachers = resp;
+      this.filteredTeachers = this.teachers;
       this.teachersLength = this.teachers.length;
-    })
+      this.checkedTeachers = [];
+      this.teachers.forEach(t => {
+        this.checkedTeachers.push({id: t.id, checked: false});
+      })
+      this.isLoading = false;
+    });
   }
 
-  clearFilters() {
-    this.teachersFilter = "";
-    this.getTeachers();
+  filterTeachers() {
+    this.filteredTeachers = this.teachers.filter(t => t.fullName.toLowerCase().includes(this.teachersFilter.toLowerCase()));
   }
 
   addTeacher() {
@@ -107,6 +125,41 @@ export class AdminTeachersComponent implements OnInit, AfterViewInit, OnDestroy 
         this.getTeachers();
         this.snackBar.open("Вчителя успішно видалено", "Ok");
       }, error => console.log(error));
+      document.querySelector('.alert')?.classList.remove("is-visible");
+    });
+    document.querySelector('.alert-cancel')?.addEventListener("click", (e) => {
+      e.preventDefault();
+      document.querySelector('.alert')?.classList.remove("is-visible");
+    });
+    document.querySelector('.alert-close')?.addEventListener("click", (e) => {
+      e.preventDefault();
+      document.querySelector('.alert')?.classList.remove("is-visible");
+    });
+    document.addEventListener("keyup", (event) => {
+      let e = <KeyboardEvent> event;
+      if(e.key == "Escape") {
+        document.querySelector('.alert')?.classList.remove("is-visible");
+      }
+    });
+  }
+
+  deleteRange() {
+    if(this.checkedTeachers.filter(t => t.checked).length <= 0) {
+      this.snackBar.open("Оберіть вчителів, яких потрібно видалити", "Ok");
+      return;
+    }
+    document.querySelector('.alert')?.classList.add("is-visible");
+    document.querySelector('.alert-confirm')?.addEventListener("click", (e) => {
+      e.preventDefault();
+      let deleted = 0
+      this.checkedTeachers.forEach(t => {
+        if(t.checked) {
+          this.teacherService.deleteTeacher(t.id).subscribe();
+          ++deleted;
+        }
+      })
+      this.getTeachers();
+      this.snackBar.open(`Видалено ${deleted} учнів`, "Ok");
       document.querySelector('.alert')?.classList.remove("is-visible");
     });
     document.querySelector('.alert-cancel')?.addEventListener("click", (e) => {

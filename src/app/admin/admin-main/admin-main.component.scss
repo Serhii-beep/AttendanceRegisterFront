@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap');
 
 .navbar {
   display: flex;
@@ -15,6 +15,7 @@
     height: 80px;
     display: flex;
     align-items: center;
+    cursor: pointer;
 
     a {
       text-decoration: none;
@@ -35,7 +36,7 @@
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position: 7px 5px;
-    transition: .7s linear;
+    transition: all .5s linear;
     a {
       color: #111128;
     }
@@ -51,6 +52,7 @@
 }
 
 .btn__profile {
+  margin-top: 5px;
   margin-left: auto;
   right: 20px;
   bottom: 10px;
@@ -63,4 +65,15 @@
   height: 80px;
   border: none;
   outline: none;
+  cursor: pointer;
+  
+  span {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    color: #111128;
+    position: absolute;
+    top: 33px;
+    right: 40px;
+  }
 }

@@ -9,6 +9,7 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { Pupil } from 'src/app/dtos/pupil.dto';
 import { CreatePupilComponent } from '../create-pupil/create-pupil.component';
 import { PupilsService } from '../services/pupils.service';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-admin-pupils',
@@ -26,6 +27,7 @@ export class AdminPupilsComponent implements OnInit, AfterViewInit, OnDestroy {
   displayedColumns: string[] = ['Клас', 'Прізвище', 'Ім\'я', 'По-батькові', 'Пошта', 'Адреса', 'Дата народження'];
   classId!: number;
   page = 0;
+  isLoading = true;
 
   constructor(private pupilsService: PupilsService,
     public dialog: MatDialog,
@@ -33,6 +35,32 @@ export class AdminPupilsComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    $(".dropdown").on("mouseenter", function() {
+      $(".options-wrapper").addClass("active");
+    });
+
+    $(".dropdown").on("mouseout", function(e) {
+      if(!$(e.relatedTarget!).hasClass("options-wrapper")) {
+        $(".options-wrapper").removeClass("active");
+      }
+    });
+
+    $(".options-wrapper").on("mouseleave", function() {
+      $(".options-wrapper").removeClass("active");
+    });
+
+    $(".option").on("mouseover", function() {
+      if($(".options-wrapper").hasClass("active")) {
+        $(".option").css('cursor', 'pointer');
+        $(".arrow_icon", this).addClass("active");
+      } else {
+        $(".option").css('cursor', 'default');
+      }
+    });
+
+    $(".option").on("mouseout", function() {
+      $(".arrow_icon").removeClass("active");
+    });
   }
 
   ngAfterViewInit(): void {
@@ -46,8 +74,8 @@ export class AdminPupilsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getPupils(classId?: number, fullName?: string) {
+    this.isLoading = true;
     this.pupilsSubscr = this.pupilsService.getAllPupilsPaginated('desc', this.page, 30).subscribe((resp) => {
-      console.log(resp);
       this.pupils = resp;
       this.filteredPupils = this.pupils;
       this.pupilsLength = this.pupils.length;
@@ -55,17 +83,11 @@ export class AdminPupilsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.pupils.forEach(p => {
         this.checkedPupils.push({id: p.id, checked: false});
       })
+      this.isLoading = false;
     });
   }
 
-  clearFilters() {
-    this.classId = -1;
-    this.pupilsFilter = "";
-    this.getPupils();
-  }
-
   filterPupils() {
-    if(!this.pupilsFilter) {}
     this.filteredPupils = this.pupils.filter(p => p.fullName.toLowerCase().includes(this.pupilsFilter.toLowerCase()));
   }
 
@@ -108,6 +130,41 @@ export class AdminPupilsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.getPupils();
         this.snackBar.open("Учня успішно видалено", "Ok");
       }, error => console.log(error));
+      document.querySelector('.alert')?.classList.remove("is-visible");
+    });
+    document.querySelector('.alert-cancel')?.addEventListener("click", (e) => {
+      e.preventDefault();
+      document.querySelector('.alert')?.classList.remove("is-visible");
+    });
+    document.querySelector('.alert-close')?.addEventListener("click", (e) => {
+      e.preventDefault();
+      document.querySelector('.alert')?.classList.remove("is-visible");
+    });
+    document.addEventListener("keyup", (event) => {
+      let e = <KeyboardEvent> event;
+      if(e.key == "Escape") {
+        document.querySelector('.alert')?.classList.remove("is-visible");
+      }
+    });
+  }
+
+  deleteRange() {
+    if(this.checkedPupils.filter(p => p.checked).length <= 0) {
+      this.snackBar.open("Оберіть учнів, яких потрібно видалити", "Ok");
+      return;
+    }
+    document.querySelector('.alert')?.classList.add("is-visible");
+    document.querySelector('.alert-confirm')?.addEventListener("click", (e) => {
+      e.preventDefault();
+      let deleted = 0
+      this.checkedPupils.forEach(p => {
+        if(p.checked) {
+          this.pupilsService.deletePupil(p.id).subscribe();
+          ++deleted;
+        }
+      })
+      this.getPupils();
+      this.snackBar.open(`Видалено ${deleted} учнів`, "Ok");
       document.querySelector('.alert')?.classList.remove("is-visible");
     });
     document.querySelector('.alert-cancel')?.addEventListener("click", (e) => {

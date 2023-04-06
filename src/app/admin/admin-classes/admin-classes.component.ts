@@ -9,6 +9,7 @@ import { ClassProfile } from 'src/app/dtos/classProfile.dto';
 import { ManageClassComponent } from '../manage-class/manage-class.component';
 import { ClassProfilesService } from '../services/class-profiles.service';
 import { ClassesService } from '../services/classes.service';
+import * as AOS from 'aos';
 
 @Component({
   selector: 'app-admin-classes',
@@ -16,13 +17,13 @@ import { ClassesService } from '../services/classes.service';
   styleUrls: ['./admin-classes.component.scss']
 })
 export class AdminClassesComponent implements OnInit, OnDestroy {
-  classes!: ClassInfo[];
+  classes!: [{num: number, cl: ClassInfo[]}];
   classesSub!: Subscription;
   profiles!: ClassProfile[];
   profilesSub!: Subscription;
   selectedProfile = "Any";
   filterClass!: string;
-  filteredClasses!: ClassInfo[];
+  filteredClasses!: [{num: number, cl: ClassInfo[]}];
   delClassSub!: Subscription;
 
   constructor(private classesService: ClassesService,
@@ -35,27 +36,30 @@ export class AdminClassesComponent implements OnInit, OnDestroy {
     this.getAllClasses();
     this.profilesSub = this.profilesService.getAll().subscribe((resp) => {
       this.profiles = resp;
+      AOS.init();
     }, error => console.log(error));
   }
 
-  getAllClasses() {
+  getAllClasses(): void {
     this.classesSub = this.classesService.getAllClassesIncluded().subscribe((resp) => {
-      this.classes = resp;
-      this.filteredClasses = resp;
+      this.classes = [{num: parseInt(resp[0].name.substring(0, resp[0].name.indexOf('-'))), cl: [resp[0]]}];
+      resp.forEach(c => {
+        const n = parseInt(c.name.substring(0, c.name.indexOf('-')));
+        if(this.classes.filter(clas => clas.num == n).length > 0) {
+          this.classes.find(clas => clas.num == n)?.cl.push(c);
+        } else {
+          this.classes.push({num: n, cl: [c]});
+        }
+      });
+      this.filteredClasses = this.classes;
     }, error => console.log(error));
   }
 
   filter() {
-    if(this.filterClass && this.selectedProfile && this.selectedProfile !== "Any") {
-      this.filteredClasses = this.classes.filter(c => c.name.includes(this.filterClass)).filter(c => 
-        c.profileName === this.selectedProfile);
-    } else if(this.filterClass) {
-      this.filteredClasses = this.classes.filter(c => c.name.includes(this.filterClass));
-    } else if(this.selectedProfile && this.selectedProfile !== "Any") {
-      this.filteredClasses = this.classes.filter(c => c.profileName === this.selectedProfile);
-    } else {
-      this.filteredClasses = this.classes;
-    }
+    this.filteredClasses.forEach(c => {
+      const cll = this.classes.filter(cc => cc.num == c.num)[0];
+      c.cl = cll.cl.filter(cc => cc.name.toLowerCase().includes(this.filterClass.toLowerCase()));
+    })
   }
 
   openPupils(classId: number) {

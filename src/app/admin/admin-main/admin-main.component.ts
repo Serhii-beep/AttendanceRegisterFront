@@ -22,6 +22,17 @@ export class AdminMainComponent implements OnInit {
       $('.nav-item').removeClass("active");
       $(this).addClass('active');
     });
+        
+    $('.nav-item').removeClass("active");
+    if(this.router.url.includes('pupils')) {
+      $("#pupils").addClass('active');
+    } else if(this.router.url.includes('teachers')) {
+      $("#teachers").addClass('active');
+    } else if(this.router.url.includes('classes')) {
+      $("#classes").addClass('active');
+    } else {
+       $("#subjects").addClass('active');
+    }
   }
 
   logout(): void {

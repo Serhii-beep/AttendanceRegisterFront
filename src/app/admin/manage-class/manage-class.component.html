@@ -19,6 +19,14 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
+            <mat-form-field *ngIf="action=='add'" appearance="outline">
+                <mat-label>Класний керівник</mat-label>
+                <mat-select [(value)]="selectedTeacherId">
+                    <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">
+                        {{ teacher.fullName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
             <button mat-raised-button color="accent" (click)="btnSubmitClick()">{{ btnText }}</button>
         </form>
     </div>

@@ -1,9 +1,9 @@
 <div class="navbar">
-  <div class="nav-item active first"><a [routerLink]="'pupils'">Учні <mat-icon class="ico">person</mat-icon></a></div>
-  <div class="nav-item"><a [routerLink]="'teachers'">Вчителі <mat-icon class="ico">school</mat-icon></a></div>
-  <div class="nav-item"><a [routerLink]="'classes'">Класи<mat-icon class="ico">people</mat-icon></a></div>
-  <div class="nav-item last"><a [routerLink]="'subjects'">Предмети <mat-icon class="ico">import_contacts</mat-icon></a></div>
-  <button [mat-menu-trigger-for]="menu" class="btn__profile">{{ currentUser.login[0] }}</button>
+  <div [routerLink]="'pupils'" id="pupils" class="nav-item active first"><a>Учні <mat-icon class="ico">person</mat-icon></a></div>
+  <div [routerLink]="'teachers'" id="teachers" class="nav-item"><a>Вчителі <mat-icon class="ico">school</mat-icon></a></div>
+  <div [routerLink]="'classes'" id="classes" class="nav-item"><a>Класи<mat-icon class="ico">people</mat-icon></a></div>
+  <div [routerLink]="'subjects'" id="subjects" class="nav-item last"><a>Предмети <mat-icon class="ico">import_contacts</mat-icon></a></div>
+  <button [mat-menu-trigger-for]="menu" class="btn__profile"><span>{{ currentUser.login[0] }}</span></button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="logout()">
       <mat-icon>logout</mat-icon> 

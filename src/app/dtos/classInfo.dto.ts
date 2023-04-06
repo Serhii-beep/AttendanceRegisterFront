@@ -3,4 +3,5 @@ export interface ClassInfo {
     name: string;
     profileName: string;
     numberOfPupils: number;
+    supervisor: string;
 }

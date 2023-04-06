@@ -175,24 +175,44 @@
         min-width: 230px;
         min-height: 50px;
         text-align: center;
+        position: relative;
         border-radius: 20px;
         font-family: 'Montserrat', sans-serif;
         font-size: 16px;
         display: flex;
+        box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5);
         justify-content: center;
         align-items: center;
         font-weight: 400;
         cursor: pointer;
+        transition: all .35s linear 0s;
 
         .ico {
+            opacity: 0;
+            position: absolute;
             margin-left: 17px;
+            transition: .35s linear 0s;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 20px;
+            text-indent: 0px;
+        }
+
+        &:hover {
+            text-indent: -20px;
+
+            .ico {
+                display: inline-block;
+                text-indent: 0px;
+                opacity: 1;
+            }
         }
     }
 }
 
 .search-container {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
 
     .search {
         min-width: 470px;
@@ -202,6 +222,7 @@
         border-radius: 20px;
         display: flex;
         align-items: center;
+        margin-right: 30px;
 
         &-input {
             height: 100%;
@@ -224,9 +245,105 @@
             cursor: pointer;
         }
     }
+
+    .dropdown-container {
+        position: absolute;
+        left: 530px;
+
+        .dropdown {
+            cursor: pointer;
+            width: 260px;
+            height: 50px;
+            background: #26273A;
+            box-shadow: inset 2px 5px 5px #040227;
+            border-radius: 20px;
+            padding: 18px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 18px;
+            color: #FFFFFF;
+            font-weight: 300;
+            font-family: 'Montserrat', sans-serif;
+            box-sizing: border-box;
+        }
+
+        .options-wrapper {
+            margin-top: 0;
+            opacity: 0;
+            transition: .55s ease;
+            padding-top: 25px;
+
+            .options {
+                z-index: -1;
+                width: 260px;
+                background: #26273A;
+                border-radius: 20px;
+                border: 2px solid #060428;
+                padding: 18px 16px;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                .option {
+                    box-sizing: border-box;
+                    min-height: 25px;
+                    font-size: 16px;
+                    color: #FFFFFF;
+                    font-weight: 300;
+                    font-family: 'Montserrat', sans-serif;
+                    padding: 7px;
+                    cursor: default;
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+
+                    &:first-child {
+                        margin-top: 10px;
+                    }
+
+                    .arrow_icon {
+                        margin-left: 20px;
+                        transition: .3s ease;
+                        opacity: 0;
+                    }
+
+                    .active {
+                        opacity: 1;
+                    }
+                }
+            }
+
+            .dropdown-arrow {
+                width: 25px;
+                height: 25px;
+                background-color: #26273A;
+                transform: rotate(45deg);
+                z-index: 1;
+                position: absolute;
+                border-top: 2px solid #060428;
+                border-left: 2px solid #060428;
+                top: 62px;
+                left: 30px;
+            }
+        }
+
+        .active {
+            opacity: 1;
+        }
+    }
 }
 
-  
+.progress {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%);
+}  
 
 .container {
     position: relative;
