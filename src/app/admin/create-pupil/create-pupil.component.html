@@ -1,96 +1,166 @@
-<mat-dialog-content>
-    <div class="wrapper">
-        <mat-stepper #stepper class="stepper">
-            <mat-step [stepControl]="personalDataForm" errorMessage="Деякі поля введено неправильно">
-                <form [formGroup]="personalDataForm" class="form">
-                    <ng-template matStepLabel>Персональні дані</ng-template>
-                    <mat-form-field appearance="outline" color="accent">
-                        <mat-label>ПІБ</mat-label>
-                        <input matInput placeholder="ПІБ учня"
-                            formControlName="fullNameControl" required
-                            [(ngModel)]="pupil.fullName"
-                            autocomplete="off">
-                        <mat-error *ngIf="personalDataForm.get('fullNameControl')?.invalid">Це поле є обов'язковим</mat-error>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" color="accent">
-                        <mat-label>Адреса</mat-label>
-                        <input matInput placeholder="Адреса проживання учня"
-                            formControlName="addressControl" required
-                            [(ngModel)]="pupil.address"
-                            autocomplete="off">
-                        <mat-error *ngIf="personalDataForm.get('addressControl')?.invalid">Це поле є обов'язковим</mat-error>
-                    </mat-form-field>
-                    <mat-form-field color="accent" appearance="outline">
-                        <mat-label>Дата народження</mat-label>
-                        <input matInput [matDatepicker]="birthDatePicker"
-                            formControlName="birthDateControl"
-                            [matDatepickerFilter]="birthDateFilter"
-                            [(ngModel)]="pupil.birthDate">
-                        <mat-error *ngIf="personalDataForm.get('birthDateControl')?.invalid">Вік учня повинен бути від 5 до 18 років</mat-error>
-                        <mat-hint>ММ/ДД/РРРР</mat-hint>
-                        <mat-datepicker-toggle matIconSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
-                        <mat-datepicker #birthDatePicker></mat-datepicker>
-                    </mat-form-field>
-                    <div class="btn__container">
-                        <button mat-raised-button matStepperNext color="primary">Далі</button>
-                    </div>
-                </form>
-            </mat-step>
-            <mat-step [stepControl]="accountDataForm" errorMessage="Деякі поля введено неправильно">
-                <form [formGroup]="accountDataForm" class="form">
-                    <ng-template matStepLabel>Дані акаунту</ng-template>
-                    <mat-form-field appearance="outline" color="accent">
-                        <mat-label>Email</mat-label>
-                        <input matInput placeholder="Електронна адреса"
-                            formControlName="emailControl" required
-                            type="email"
-                            [(ngModel)]="pupil.email"
-                            autocomplete="off">
-                        <mat-error *ngIf="accountDataForm.get('emailControl')?.invalid">{{ getEmailValidationError() }}</mat-error>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" color="accent">
-                        <mat-label>Ім'я користувача</mat-label>
-                        <input matInput placeholder="Ім'я користувача"
-                            formControlName="loginControl"
-                            [(ngModel)]="pupil.login"
-                            autocomplete="off">
-                        <mat-error *ngIf="accountDataForm.get('loginControl')?.invalid">Це поле є обов'язковим</mat-error>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" color="accent">
-                        <mat-label>Пароль</mat-label>
-                        <input matInput placeholder="Пароль"
-                            formControlName="passwordControl"
-                            type="password"
-                            [(ngModel)]="pupil.password">
-                        <mat-error *ngIf="accountDataForm.get('passwordControl')?.invalid">Це поле є обов'язковим</mat-error>
-                    </mat-form-field>
-                    <div class="btn__container">
-                        <button mat-raised-button color="accent" matStepperPrevious>Назад</button>
-                        <button mat-raised-button color="primary" matStepperNext>Далі</button>
-                    </div>
-                </form>
-            </mat-step>
-            <mat-step [stepControl]="classDataForm" errorMessage="Деякі поля введено неправильно">
-                <form [formGroup]="classDataForm" class="form">
-                    <ng-template matStepLabel>Дані класу учня</ng-template>
-                    <mat-form-field appearance="outline" color="accent">
-                        <mat-label>Клас</mat-label>
-                        <mat-select [(value)]="pupil.class.id"
-                            formControlName="classControl">
-                            <mat-optgroup *ngFor="let profile of classes" [label]="profile.profileName">
-                                <mat-option *ngFor="let class of profile.classes" [value]="class.id">
-                                    {{ class.name }}
-                                </mat-option>
-                            </mat-optgroup>
-                        </mat-select>
-                    </mat-form-field>
-                    <div class="btn__container">
-                        <button mat-raised-button color="accent" matStepperPrevious>Назад</button>
-                        <button mat-raised-button color="primary"
-                            (click)="addPupil()"><mat-icon class="icon">done</mat-icon> {{ resultButtonText }}</button>
-                    </div>
-                </form>
-            </mat-step>
-        </mat-stepper>
+<div class="wrapper">
+    <div class="btn-close-container">
+        <button (click)="dialogRef.close()" class="btn-close"><mat-icon class="btn-close-icon">close</mat-icon></button>
     </div>
-</mat-dialog-content>
+    <form [formGroup]="pupilForm" class="form">
+        <div class="form-block">
+            <div class="form-header">
+                <div class="form-header-text">ПІБ</div>
+                <div class="form-header-divider"></div>
+            </div>
+            <div class="form-content">
+                <div class="input__wrapper">
+                    <input formControlName="firstNameControl"
+                        [(ngModel)]="firstName"
+                        id="firstName"
+                        class="input"
+                        required
+                        autocomplete="off">
+                    <label class="label" [class.danger]="pupilForm.get('firstNameControl')?.invalid
+                        && pupilForm.get('firstNameControl')?.touched"
+                        for="firstName">Прізвище</label>
+                    <span class="error danger" *ngIf="pupilForm.get('firstNameControl')?.invalid
+                        && pupilForm.get('firstNameControl')?.touched">
+                        Це поле є обов'язковим
+                    </span>
+                </div>
+                <div class="input__wrapper">
+                    <input formControlName="lastNameControl"
+                        [(ngModel)]="lastName"
+                        id="lastName"
+                        class="input"
+                        required
+                        autocomplete="off">
+                    <label class="label" [class.danger]="pupilForm.get('lastNameControl')?.invalid
+                        && pupilForm.get('lastNameControl')?.touched"
+                        for="lastName">Ім'я</label>
+                    <span class="error danger" *ngIf="pupilForm.get('lastNameControl')?.invalid
+                        && pupilForm.get('lastNameControl')?.touched">
+                        Це поле є обов'язковим
+                    </span>
+                </div>
+                <div class="input__wrapper">
+                    <input formControlName="middleNameControl"
+                        [(ngModel)]="middleName"
+                        id="middleName"
+                        class="input"
+                        required
+                        autocomplete="off">
+                    <label class="label" [class.danger]="pupilForm.get('middleNameControl')?.invalid
+                        && pupilForm.get('middleNameControl')?.touched"
+                        for="middleName">По-батькові</label>
+                    <span class="error danger" *ngIf="pupilForm.get('middleNameControl')?.invalid
+                        && pupilForm.get('middleNameControl')?.touched">
+                        Це поле є обов'язковим
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-block">
+            <div class="form-header">
+                <div class="form-header-text">Контактні&nbsp;дані</div>
+                <div class="form-header-divider"></div>
+            </div>
+            <div class="form-content">
+                <div class="input__wrapper">
+                    <input formControlName="emailControl"
+                        [(ngModel)]="pupil.email"
+                        id="email"
+                        class="input"
+                        required
+                        autocomplete="off">
+                    <label class="label" [class.danger]="pupilForm.get('emailControl')?.invalid
+                        && pupilForm.get('emailControl')?.touched"
+                        for="email">Електронна пошта</label>
+                    <span class="error danger" *ngIf="pupilForm.get('emailControl')?.invalid
+                        && pupilForm.get('emailControl')?.touched">
+                        {{ getEmailValidationError() }}
+                    </span>
+                </div>
+                <div class="input__wrapper">
+                    <input formControlName="addressControl"
+                        [(ngModel)]="pupil.address"
+                        id="address"
+                        class="input"
+                        required
+                        autocomplete="off">
+                    <label class="label" [class.danger]="pupilForm.get('addressControl')?.invalid
+                        && pupilForm.get('addressControl')?.touched"
+                        for="address">Адреса</label>
+                    <span class="error danger" *ngIf="pupilForm.get('addressControl')?.invalid
+                        && pupilForm.get('addressControl')?.touched">
+                        Це поле є обов'язковим
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-block">
+            <div class="form-header">
+                <div class="form-header-text">Деталі</div>
+                <div class="form-header-divider"></div>
+            </div>
+            <div class="form-content">
+                <div class="input__wrapper">
+                    <input formControlName="loginControl"
+                        [(ngModel)]="pupil.login"
+                        id="login"
+                        class="input"
+                        required
+                        autocomplete="off">
+                    <label class="label" [class.danger]="pupilForm.get('loginControl')?.invalid
+                        && pupilForm.get('loginControl')?.touched"
+                        for="login">Логін</label>
+                    <span class="error danger" *ngIf="pupilForm.get('loginControl')?.invalid
+                        && pupilForm.get('loginControl')?.touched">
+                        Це поле є обов'язковим
+                    </span>
+                </div>
+                <div class="input__wrapper">
+                    <input formControlName="passwordControl"
+                        [(ngModel)]="pupil.password"
+                        id="password"
+                        type="password"
+                        class="input"
+                        required
+                        autocomplete="off">
+                    <label class="label" [class.danger]="pupilForm.get('passwordControl')?.invalid
+                        && pupilForm.get('passwordControl')?.touched"
+                        for="password">Пароль</label>
+                    <span class="error danger" *ngIf="pupilForm.get('passwordControl')?.invalid
+                        && pupilForm.get('passwordControl')?.touched">
+                        Це поле є обов'язковим
+                    </span>
+                </div>
+                <mat-form-field>
+                    <mat-label>Виберіть дату народження</mat-label>
+                    <input formControlName="birthDateControl"
+                        [(ngModel)]="pupil.birthDate"
+                        placeholder="Дата народження"
+                        matInput
+                        [matDatepickerFilter]="birthDateFilter"
+                        [matDatepicker]="picker">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker disabled="false"></mat-datepicker>
+                    <mat-error *ngIf="pupilForm.get('birthDateControl')?.invalid">Вік учня повинен бути від 5 до 18 років</mat-error>
+                </mat-form-field>
+                <div class="dropdown-container-dialog">
+                    <div class="dropdown-dialog">{{ pupil.class.name ? pupil.class.name : 'Клас' }} <mat-icon>keyboard_arrow_down</mat-icon></div>
+                    <div class="options-wrapper-dialog">
+                        <div class="dropdown-arrow-dialog"></div>
+                        <div class="options-dialog">
+                            <div class="option-dialog"
+                                (mouseover)="mouseOverOption($event)"
+                                (click)="setClass($event, class)"
+                                *ngFor="let class of classes">{{ class.name }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="footer">
+        <button (click)="dialogRef.close()" class="footer-back">Назад</button>
+        <button (click)="addPupil()" class="footer-save">{{ resultButtonText }}</button>
+    </div>
+</div>

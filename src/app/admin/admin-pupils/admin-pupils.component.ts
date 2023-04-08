@@ -93,8 +93,9 @@ export class AdminPupilsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   editPupil(pupil: Pupil) {
     const dialogRef = this.dialog.open(CreatePupilComponent, {
-      height: '70%',
-      width: '75%'
+      height: '700px',
+      width: '770px',
+      panelClass: 'dialog-container'
     });
     dialogRef.componentInstance.resultButtonText = "Зберегти";
     dialogRef.componentInstance.pupil = pupil;
@@ -109,8 +110,9 @@ export class AdminPupilsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   addPupil(): void {
     const dialogRef = this.dialog.open(CreatePupilComponent, {
-      height: '70%',
-      width: '75%'
+      height: '700px',
+      width: '770px',
+      panelClass: 'dialog-container'
     });
     dialogRef.componentInstance.resultButtonText = "Додати учня";
     dialogRef.componentInstance.action = "create";
