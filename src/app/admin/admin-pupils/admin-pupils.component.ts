@@ -73,18 +73,30 @@ export class AdminPupilsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  getPupils(classId?: number, fullName?: string) {
+  getPupils(classId?: number) {
     this.isLoading = true;
-    this.pupilsSubscr = this.pupilsService.getAllPupilsPaginated('desc', this.page, 30).subscribe((resp) => {
-      this.pupils = resp;
-      this.filteredPupils = this.pupils;
-      this.pupilsLength = this.pupils.length;
-      this.checkedPupils = [];
-      this.pupils.forEach(p => {
-        this.checkedPupils.push({id: p.id, checked: false});
-      })
+    this.pupilsSubscr = this.pupilsService.getAllPupilsPaginated('desc', this.page, 3).subscribe((resp) => {
+      if(resp.length > 0) {
+        this.pupils = resp;
+        this.filteredPupils = this.pupils;
+        this.pupilsLength = this.pupils.length;
+        this.checkedPupils = [];
+        this.pupils.forEach(p => {
+          this.checkedPupils.push({id: p.id, checked: false});
+        });
+      } else {
+        this.page--;
+      }
       this.isLoading = false;
     });
+  }
+
+  getPage(p: number) {
+    if(p < 0) {
+      return;
+    }
+    this.page = p;
+    this.getPupils();
   }
 
   filterPupils() {
