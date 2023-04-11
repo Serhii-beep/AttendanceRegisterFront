@@ -1,0 +1,61 @@
+<div class="wrapper">
+    <h2 class="subject-name">{{ subject?.name }}</h2>
+    <div class="line1"></div>
+    <div class="teachers-container">
+        <div class="teachers-header"><span class="teachers-header-text">Вчителі</span></div>
+        <div class="table-wrapper">
+            <div class="table">
+                <div class="header-row">
+                    <div class="header">Прізвище</div>
+                    <div class="header">Ім'я</div>
+                    <div class="header">По-батькові</div>
+                </div>
+                <div class="row" *ngFor="let teacher of subject?.teachers">
+                    <div class="cell">{{ teacher.fullName.split(' ')[0] }}</div>
+                    <div class="cell">{{ teacher.fullName.split(' ')[1] }}</div>
+                    <div class="cell">{{ teacher.fullName.split(' ')[2] }}</div>
+                    <div class="teacher-buttons">
+                        <button (click)="deleteTeacher(teacher.id)" class="teacher-buttons-delete"><mat-icon>delete</mat-icon></button>
+                    </div>
+                </div>
+                <div class="tools">
+                    <div class="classes-input-container">
+                        <input [(ngModel)]="inputTeacher"
+                            class="classes-input"
+                            type="text"
+                            autocomplete="off"
+                            (keyup)="inputTeacherHandler()"
+                            (keydown)="completePredictionTeacher($event)">
+                        <span [innerText]="suggestionTeacher" class="classes-input-suggestion"></span>
+                    </div>
+                    <button (click)="addTeacher()" class="add-teacher"><mat-icon>add</mat-icon></button>
+                </div>
+                <span class="error-input error-teachers">Вчителя {{ inputTeacher }} не знайдено</span>
+            </div>
+        </div>
+    </div>
+    <div class="line2"></div>
+    <div class="classes-container">
+        <div class="classes-header"><span class="classes-header-text">Класи</span></div>
+        <div class="classes-wrapper">
+            <div class="classes">
+                <div class="classes-class" *ngFor="let class of subject?.classes">
+                    {{ class.name }}
+                    <mat-icon (click)="deleteClass(class.id)" class="icon-close">close</mat-icon>
+                </div>
+                <div class="classes-input-container">
+                    <input [(ngModel)]="inputClass"
+                        class="classes-input"
+                        type="text"
+                        autocomplete="off"
+                        (keyup)="inputClassHandler()"
+                        (keydown)="completePredictionClass($event)">
+                    <span [innerText]="suggestionClass" class="classes-input-suggestion"></span>
+                    <span class="error-input error-classes">Клас {{ inputClass }} не знайдено</span>
+                </div>
+                <button (click)="addClass()" class="classes-add"><mat-icon>add</mat-icon></button>
+            </div>
+        </div>
+    </div>
+    <div class="line3"></div>
+</div>

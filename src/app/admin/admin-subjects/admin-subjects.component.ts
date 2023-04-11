@@ -11,8 +11,10 @@ import * as $ from 'jquery';
 })
 export class AdminSubjectsComponent implements OnInit, OnDestroy {
   subjects!: Subject[];
+  filteredSubjects!: Subject[];
   subjectSub!: Subscription;
   displayedColumns = ["Предмет", "Вчителі", "Класи"];
+  subjectsFilter = "";
   
 
   constructor(private subjectService: SubjectsService) { }
@@ -20,7 +22,7 @@ export class AdminSubjectsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subjectSub = this.subjectService.getAllSubjects().subscribe((resp) => {
       this.subjects = resp;
-      console.log(resp);
+      this.filteredSubjects = this.subjects;
     }, error => console.log(error));
 
     $(".dropdown").on("mouseenter", function() {
@@ -49,6 +51,21 @@ export class AdminSubjectsComponent implements OnInit, OnDestroy {
     $(".option").on("mouseout", function() {
       $(".arrow_icon").removeClass("active");
     });
+  }
+
+  filterSubjects() {
+    this.filteredSubjects = this.subjects.filter(s => s.name.toLowerCase().includes(this.subjectsFilter.toLowerCase()));
+  }
+
+  sortSubjects(order: string) {
+    if(!$('.options-wrapper').hasClass('active')) {
+      return;
+    }
+    if(order == 'desc') {
+      this.filteredSubjects = this.filteredSubjects.sort((s1, s2) => s2.name.localeCompare(s1.name));
+    } else {
+      this.filteredSubjects = this.filteredSubjects.sort((s1, s2) => s1.name.localeCompare(s2.name));
+    }
   }
 
   ngOnDestroy(): void {

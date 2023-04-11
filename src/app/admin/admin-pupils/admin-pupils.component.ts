@@ -75,7 +75,7 @@ export class AdminPupilsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getPupils(classId?: number) {
     this.isLoading = true;
-    this.pupilsSubscr = this.pupilsService.getAllPupilsPaginated('desc', this.page, 3).subscribe((resp) => {
+    this.pupilsSubscr = this.pupilsService.getAllPupilsPaginated('desc', this.page, 10).subscribe((resp) => {
       if(resp.length > 0) {
         this.pupils = resp;
         this.filteredPupils = this.pupils;
@@ -101,6 +101,17 @@ export class AdminPupilsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   filterPupils() {
     this.filteredPupils = this.pupils.filter(p => p.fullName.toLowerCase().includes(this.pupilsFilter.toLowerCase()));
+  }
+
+  sortPupils(order: string) {
+    if(!$('.options-wrapper').hasClass('active')) {
+      return;
+    }
+    if(order == 'desc') {
+      this.filteredPupils = this.filteredPupils.sort((p1, p2) => p2.fullName.localeCompare(p1.fullName));
+    } else {
+      this.filteredPupils = this.filteredPupils.sort((p1, p2) => p1.fullName.localeCompare(p2.fullName));
+    }
   }
 
   editPupil(pupil: Pupil) {

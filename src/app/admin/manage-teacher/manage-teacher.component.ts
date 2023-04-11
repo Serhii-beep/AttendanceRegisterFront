@@ -4,6 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Teacher } from 'src/app/dtos/teacher.dto';
 import { TeachersService } from '../services/teachers.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-manage-teacher',
@@ -16,9 +17,13 @@ export class ManageTeacherComponent implements OnInit, OnDestroy {
   resultButtonText!: string;
   action!: string;
   teacherSub!: Subscription;
+  firstName = "";
+  lastName = "";
+  middleName = "";
 
   constructor(private formBuilder: FormBuilder,
     private teachersService: TeachersService,
+    private snackbar: MatSnackBar,
     public dialogRef: MatDialogRef<ManageTeacherComponent>) {
       this.teacher = {
         id: 0,
@@ -32,11 +37,18 @@ export class ManageTeacherComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.teacherForm = this.formBuilder.group({
-      fullNameControl: ['', Validators.required],
+      firstNameControl: ['', Validators.required],
+      lastNameControl: ['', Validators.required],
+      middleNameControl: ['', Validators.required],
       emailControl: ['', { validators: [Validators.required, Validators.email] }],
       loginControl: ['', Validators.required],
       passwordControl: ['', Validators.required]
     });
+    if(this.action == "edit") {
+      this.firstName = this.teacher.fullName.split(' ')[0];
+      this.lastName = this.teacher.fullName.split(' ')[1];
+      this.middleName = this.teacher.fullName.split(' ')[2];
+    }
   }
 
   getEmailValidationError(): string {
@@ -49,7 +61,13 @@ export class ManageTeacherComponent implements OnInit, OnDestroy {
     return '';
   }
 
-  btnSubmitClick() {
+  addTeacher() {
+    if(!this.teacherForm.valid) {
+      this.teacherForm.markAllAsTouched();
+      this.snackbar.open("Виправте всі помилки", "Ok");
+      return;
+    }
+    this.teacher.fullName = this.firstName + ' ' + this.lastName + ' ' + this.middleName;
     if(this.action == "create") {
       this.teacherSub = this.teachersService.addTeacher(this.teacher).subscribe((resp: any) => {
         this.dialogRef.close("success");

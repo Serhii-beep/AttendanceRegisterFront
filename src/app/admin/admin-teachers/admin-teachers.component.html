@@ -12,8 +12,8 @@
                 <div class="options-wrapper">
                     <div class="dropdown-arrow"></div>
                     <div class="options">
-                        <div class="option">Спаданням <mat-icon class="arrow_icon">arrow_downward</mat-icon></div>
-                        <div class="option">Зростанням <mat-icon class="arrow_icon">arrow_upward</mat-icon></div>
+                        <div (click)="sortTeachers('desc')" class="option">Спаданням <mat-icon class="arrow_icon">arrow_downward</mat-icon></div>
+                        <div (click)="sortTeachers('asc')" class="option">Зростанням <mat-icon class="arrow_icon">arrow_upward</mat-icon></div>
                     </div>
                 </div>
             </div>
@@ -48,8 +48,8 @@
             </div>
             <div class="paginator">
                 <p class="page-index">Сторінка: {{ page + 1 }}</p>
-                <button class="arrow"><mat-icon class="arrow_icon">arrow_left</mat-icon></button>
-                <button class="arrow"><mat-icon class="arrow_icon">arrow_right</mat-icon></button>
+                <button class="arrow"><mat-icon (click)="getPage(page - 1)" class="arrow_icon">arrow_left</mat-icon></button>
+                <button class="arrow"><mat-icon (click)="getPage(page + 1)" class="arrow_icon">arrow_right</mat-icon></button>
             </div>
         </div>
     <div class="alert">

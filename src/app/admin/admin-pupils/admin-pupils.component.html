@@ -12,8 +12,8 @@
                 <div class="options-wrapper">
                     <div class="dropdown-arrow"></div>
                     <div class="options">
-                        <div class="option">Спаданням <mat-icon class="arrow_icon">arrow_downward</mat-icon></div>
-                        <div class="option">Зростанням <mat-icon class="arrow_icon">arrow_upward</mat-icon></div>
+                        <div (click)="sortPupils('desc')" class="option">Спаданням <mat-icon class="arrow_icon">arrow_downward</mat-icon></div>
+                        <div (click)="sortPupils('asc')" class="option">Зростанням <mat-icon class="arrow_icon">arrow_upward</mat-icon></div>
                     </div>
                 </div>
             </div>

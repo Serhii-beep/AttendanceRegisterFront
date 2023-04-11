@@ -162,6 +162,10 @@
         .arrow_icon {
             font-size: 40px;
             color: #FFFFFF;
+
+            &:hover {
+                cursor: pointer;
+            }
         }
     }
 }

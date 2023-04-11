@@ -71,25 +71,49 @@ export class AdminTeachersComponent implements OnInit, AfterViewInit, OnDestroy 
   getTeachers(fullName?: string) {
     this.isLoading = true;
     this.teachersSub = this.teacherService.getAllteachersPaginated('desc', this.page, 30).subscribe((resp) => {
-      this.teachers = resp;
-      this.filteredTeachers = this.teachers;
-      this.teachersLength = this.teachers.length;
-      this.checkedTeachers = [];
-      this.teachers.forEach(t => {
-        this.checkedTeachers.push({id: t.id, checked: false});
-      })
+      if(resp.length > 0) {
+        this.teachers = resp;
+        this.filteredTeachers = this.teachers;
+        this.teachersLength = this.teachers.length;
+        this.checkedTeachers = [];
+        this.teachers.forEach(t => {
+          this.checkedTeachers.push({id: t.id, checked: false});
+        })
+      } else {
+        this.page--;
+      }
       this.isLoading = false;
     });
+  }
+
+  getPage(p: number) {
+    if(p < 0) {
+      return;
+    }
+    this.page = p;
+    this.getTeachers();
   }
 
   filterTeachers() {
     this.filteredTeachers = this.teachers.filter(t => t.fullName.toLowerCase().includes(this.teachersFilter.toLowerCase()));
   }
 
+  sortTeachers(order: string) {
+    if(!$('.options-wrapper').hasClass('active')) {
+      return;
+    }
+    if(order == 'desc') {
+      this.filteredTeachers = this.filteredTeachers.sort((t1, t2) => t2.fullName.localeCompare(t1.fullName));
+    } else {
+      this.filteredTeachers = this.filteredTeachers.sort((t1, t2) => t1.fullName.localeCompare(t2.fullName));
+    }
+  }
+
   addTeacher() {
     const dialogRef = this.dialog.open(ManageTeacherComponent, {
-      height: '70%',
-      width: '75%'
+      height: '700px',
+      width: '770px',
+      panelClass: 'dialog-container'
     });
     dialogRef.componentInstance.resultButtonText = "Додати вчителя";
     dialogRef.componentInstance.action = "create";
@@ -103,8 +127,9 @@ export class AdminTeachersComponent implements OnInit, AfterViewInit, OnDestroy 
 
   editTeacher(teacher: Teacher) {
     const dialogRef = this.dialog.open(ManageTeacherComponent, {
-      height: '70%',
-      width: '75%'
+      height: '700px',
+      width: '770px',
+      panelClass: 'dialog-container'
     });
     dialogRef.componentInstance.resultButtonText = "Зберегти";
     dialogRef.componentInstance.teacher = teacher;
@@ -159,7 +184,7 @@ export class AdminTeachersComponent implements OnInit, AfterViewInit, OnDestroy 
         }
       })
       this.getTeachers();
-      this.snackBar.open(`Видалено ${deleted} учнів`, "Ok");
+      this.snackBar.open(`Видалено ${deleted} вчителів`, "Ok");
       document.querySelector('.alert')?.classList.remove("is-visible");
     });
     document.querySelector('.alert-cancel')?.addEventListener("click", (e) => {

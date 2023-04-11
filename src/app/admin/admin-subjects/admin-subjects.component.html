@@ -1,7 +1,10 @@
 <div class="wrapper">
     <div class="search-container">
         <div class="search">
-            <input type="text" class="search-input" placeholder="Пошук">
+            <input [(ngModel)]="subjectsFilter"
+                type="text" class="search-input"
+                placeholder="Пошук"
+                (keyup)="filterSubjects()">
             <mat-icon class="search-icon">search</mat-icon>
         </div>
         <div class="dropdown-container">
@@ -9,9 +12,8 @@
             <div class="options-wrapper">
                 <div class="dropdown-arrow"></div>
                 <div class="options">
-                    <div class="option">Спаданням <mat-icon class="arrow_icon">arrow_downward</mat-icon></div>
-                    <div class="hdivider"></div>
-                    <div class="option">Зростанням <mat-icon class="arrow_icon">arrow_upward</mat-icon></div>
+                    <div (click)="sortSubjects('desc')" class="option">Спаданням <mat-icon class="arrow_icon">arrow_downward</mat-icon></div>
+                    <div (click)="sortSubjects('asc')" class="option">Зростанням <mat-icon class="arrow_icon">arrow_upward</mat-icon></div>
                 </div>
             </div>
         </div>
@@ -21,7 +23,7 @@
         <div class="header-row">
             <div class="header" *ngFor="let column of displayedColumns">{{ column }}</div>
         </div>
-        <div class="row" *ngFor="let subject of subjects">
+        <div class="row" *ngFor="let subject of filteredSubjects">
             <div class="cell">{{ subject.name }}</div>
             <div class="divider"></div>
             <div class="cell teachers">
@@ -39,7 +41,7 @@
             </div>
             <div class="divider"></div>
             <div class="button-container">
-                <button class="icon-button"><mat-icon>edit</mat-icon></button>
+                <button [routerLink]="['edit', subject.id]" class="icon-button"><mat-icon>edit</mat-icon></button>
                 <div class="divider"></div>
                 <button class="icon-button"><mat-icon>delete</mat-icon></button>
             </div>
