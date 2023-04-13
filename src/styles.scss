@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100vh; }
+html, body { height: 100vh; background: #111128; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 ::-webkit-scrollbar {
@@ -27,4 +27,96 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     &::-webkit-scrollbar {
         display: none;
     }
+}
+
+.alert {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(94, 110, 141, 0.9);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s 0s, visibility 0s .3s;
+}
+
+.alert.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .3s 0s, visibility 0s 0s;
+}
+
+.alert-container {
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+    margin: 4em auto;
+    background: #111128;
+    color: #E5DED8;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+    transform: translateY(-40px);
+    transition-property: transform;
+    transition-duration: .3s;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.alert-container p {
+    padding: 3em 1em;
+}
+
+.alert-container footer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.alert-container footer div {
+    height: 60px;
+    line-height: 60px;
+    color: #E5DED8;
+    font-weight: 700;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, .2);
+    background: #26273A;
+    text-decoration: none;
+    transition: background-color .2s;
+    width: 150px;
+    margin: 30px 20px;
+    margin-top: 0;
+    border-radius: 20px;
+    box-shadow: 5px 5px 4px #080629;
+}
+
+.alert-container footer div:hover {
+    box-shadow: 0 0 100em 100em rgba(0, 0, 0, .2) inset;
+    cursor: pointer;
+}
+
+.alert-container footer .alert-cancel {
+    background: rgba(191, 64, 64, 0.998);
+}
+
+.alert-container .alert-close {
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    color: #8f9cb5;
+    font-weight: 900;
+    font-size: 40px;
+    text-decoration: none;
+}
+
+.alert-container .alert-close:hover {
+    cursor: pointer;
+}
+
+.is-visible .alert-container {
+    transform: translateY(0);
 }

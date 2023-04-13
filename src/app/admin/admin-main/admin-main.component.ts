@@ -11,7 +11,22 @@ import * as $ from 'jquery';
 export class AdminMainComponent implements OnInit {
   currentUser!: Admin;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    this.router.events.subscribe((event: Event) => {
+      if(event instanceof NavigationEnd) {
+        $('.nav-item').removeClass("active");
+        if(event.url.includes('pupils')) {
+          $("#pupils").addClass('active');
+        } else if(event.url.includes('teachers')) {
+          $("#teachers").addClass('active');
+        } else if(event.url.includes('classes')) {
+          $("#classes").addClass('active');
+        } else {
+          $("#subjects").addClass('active');
+        }
+      }
+    })
+  }
   
   ngOnInit(): void {
     let admin = localStorage.getItem('currentUser');
@@ -22,17 +37,8 @@ export class AdminMainComponent implements OnInit {
       $('.nav-item').removeClass("active");
       $(this).addClass('active');
     });
-        
-    $('.nav-item').removeClass("active");
-    if(this.router.url.includes('pupils')) {
-      $("#pupils").addClass('active');
-    } else if(this.router.url.includes('teachers')) {
-      $("#teachers").addClass('active');
-    } else if(this.router.url.includes('classes')) {
-      $("#classes").addClass('active');
-    } else {
-       $("#subjects").addClass('active');
-    }
+
+    
   }
 
   logout(): void {

@@ -66,7 +66,9 @@ export class CreatePupilComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.classes = await this.classService.getAllClasses().toPromise();
     if(this.action == "create") {
-      this.pupil.class = this.classes[0];
+      if(this.pupil.class.id <= 0) {
+        this.pupil.class = this.classes[0];
+      }
     } else {
       this.firstName = this.pupil.fullName.split(' ')[0];
       this.lastName = this.pupil.fullName.split(' ')[1];

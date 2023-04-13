@@ -9,6 +9,7 @@ import { ClassProfilesService } from '../services/class-profiles.service';
 import { ClassesService } from '../services/classes.service';
 import { TeachersService } from '../services/teachers.service';
 import { Teacher } from 'src/app/dtos/teacher.dto';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-manage-class',
@@ -25,10 +26,10 @@ export class ManageClassComponent implements OnInit, OnDestroy {
   classSub!: Subscription;
   teachersSub!: Subscription;
   profilesSub!: Subscription;
-  selectedProfileId!: number;
-  selectedTeacherId!: number;
+  selectedProfileId = -1;
+  selectedTeacherId = -1;
   constructor(private formBuilder: FormBuilder,
-    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
     private _classesService: ClassesService,
     private _classProfilesService: ClassProfilesService,
     private _teachersService: TeachersService,
@@ -48,13 +49,24 @@ export class ManageClassComponent implements OnInit, OnDestroy {
     })
     this.profilesSub = this._classProfilesService.getAll().subscribe((resp: ClassProfile[]) => {
       this.profiles = resp;
+      if(this.action == "edit") {
+        this.selectedProfileId = this.profiles.filter(p => p.profileName == this.class.profileName)[0].id;
+      }
     });
     this.teachersSub = this._teachersService.getAllteachersPaginated('desc', 0, 30).subscribe((resp) => {
       this.teachers = resp;
+      if(this.action == "edit") {
+        this.selectedTeacherId = this.teachers.filter(t => t.fullName == this.class.supervisor)[0].id;
+      }
     })
   }
 
   btnSubmitClick() {
+    if(!this.classForm.valid || this.selectedProfileId < 0 || this.selectedTeacherId < 0) {
+      this.classForm.markAllAsTouched();
+      this.snackBar.open("Виправте всі помилки", "Ok");
+      return;
+    }
     if(this.action == "edit") {
       let classProfileId = this.profiles.filter(cp => cp.profileName == this.class.profileName)[0].id;
       let supervId = this.teachers.filter(t => t.fullName == this.class.supervisor)[0].id;

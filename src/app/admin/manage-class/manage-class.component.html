@@ -1,33 +1,41 @@
 <mat-dialog-content>
     <div class="wrapper">
-        <form [formGroup]="classForm">
-            <mat-form-field class="inputField" appearance="outline">
-                <mat-label class="label">Назва класу</mat-label>
-                <input matInput 
-                    formControlName="className"
-                    [(ngModel)]="class.name"
-                    placeholder="Введіть назву класу"
-                    class="input" 
-                    autocomplete="off">
-                <mat-error *ngIf="classForm.get('className')?.invalid">Це поле є обов'язковим</mat-error>
-            </mat-form-field>
-            <mat-form-field *ngIf="action=='add'" appearance="outline">
-                <mat-label>Профіль</mat-label>
-                <mat-select [(value)]="selectedProfileId">
-                    <mat-option *ngFor="let profile of profiles" [value]="profile.id">
-                        {{ profile.profileName }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field *ngIf="action=='add'" appearance="outline">
-                <mat-label>Класний керівник</mat-label>
-                <mat-select [(value)]="selectedTeacherId">
-                    <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">
-                        {{ teacher.fullName }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <button mat-raised-button color="accent" (click)="btnSubmitClick()">{{ btnText }}</button>
+        <form class="form" [formGroup]="classForm">
+            <div class="input__wrapper">
+                <input id="className" formControlName="className" [(ngModel)]="class.name" class="input" required>
+                <label class="label" for="className">Назва класу</label>
+                <span class="error danger" *ngIf="classForm.get('className')?.invalid
+                    && classForm.get('className')?.touched">
+                    Це поле є обов'язковим
+                </span>
+            </div>
+            <div class="input__wrapper">
+                <mat-form-field appearance="outline">
+                    <mat-label>Профіль</mat-label>
+                    <mat-select [(value)]="selectedProfileId">
+                        <mat-option *ngFor="let profile of profiles" [value]="profile.id">
+                            {{ profile.profileName }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <span class="error danger select-error" *ngIf="selectedProfileId < 0">
+                    Це поле є обов'язковим
+                </span>
+            </div>
+            <div class="input__wrapper">
+                <mat-form-field appearance="outline">
+                    <mat-label>Класний керівник</mat-label>
+                    <mat-select [(value)]="selectedTeacherId">
+                        <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">
+                            {{ teacher.fullName }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <span class="error danger select-error" *ngIf="selectedTeacherId < 0">
+                    Це поле є обов'язковим
+                </span>
+            </div>
+            <button class="btn-submit" (click)="btnSubmitClick()">{{ btnText }}</button>
         </form>
     </div>
 </mat-dialog-content>

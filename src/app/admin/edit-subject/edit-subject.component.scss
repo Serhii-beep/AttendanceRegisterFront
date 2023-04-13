@@ -8,6 +8,7 @@
     width: 100%;
     height: 100;
     background: #111128;
+    padding-bottom: 50px;
 }
 
 .subject-name {
@@ -33,14 +34,6 @@
     width: 100%;
     height: 50px;
     background-size: cover;
-}
-
-.line3 {
-    background-image: url('../images/Line3.svg');
-    background-repeat: no-repeat;
-    width: 100%;
-    background-size: cover;
-    height: 70px;
 }
 
 .teachers-container {
@@ -83,7 +76,7 @@
         background-image: url('../images/EllipseTeacherName.png');
         width: 220px;
         height: 70px;
-        margin-top: 30px;
+        margin-top: 50px;
         margin-bottom: 20px;
         margin-left: 15px;
         background-repeat: no-repeat;

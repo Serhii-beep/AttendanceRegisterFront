@@ -66,18 +66,17 @@ export class AdminPupilsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     let classIdStr = this.route.snapshot.queryParamMap.get('class');
     this.classId = parseInt(classIdStr as string);
-    if(this.classId) {
-      this.getPupils(this.classId);
-    } else {
-      this.getPupils();
-    }
+    this.getPupils();
   }
 
-  getPupils(classId?: number) {
+  getPupils() {
     this.isLoading = true;
     this.pupilsSubscr = this.pupilsService.getAllPupilsPaginated('desc', this.page, 10).subscribe((resp) => {
       if(resp.length > 0) {
         this.pupils = resp;
+        if(this.classId) {
+          this.pupils = this.pupils.filter(p => p.class.id == this.classId);
+        }
         this.filteredPupils = this.pupils;
         this.pupilsLength = this.pupils.length;
         this.checkedPupils = [];
@@ -139,6 +138,9 @@ export class AdminPupilsComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     dialogRef.componentInstance.resultButtonText = "Додати учня";
     dialogRef.componentInstance.action = "create";
+    if(this.classId) {
+      dialogRef.componentInstance.pupil.class = this.pupils.filter(p => p.class.id == this.classId)[0].class;
+    }
     dialogRef.afterClosed().subscribe(res => {
       this.getPupils();
       if(res && res == "success") {

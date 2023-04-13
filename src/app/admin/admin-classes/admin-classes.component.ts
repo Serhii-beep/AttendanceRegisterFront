@@ -9,7 +9,6 @@ import { ClassProfile } from 'src/app/dtos/classProfile.dto';
 import { ManageClassComponent } from '../manage-class/manage-class.component';
 import { ClassProfilesService } from '../services/class-profiles.service';
 import { ClassesService } from '../services/classes.service';
-import * as AOS from 'aos';
 
 @Component({
   selector: 'app-admin-classes',
@@ -22,8 +21,6 @@ export class AdminClassesComponent implements OnInit, OnDestroy {
   profiles!: ClassProfile[];
   profilesSub!: Subscription;
   selectedProfile = "Any";
-  filterClass!: string;
-  filteredClasses!: [{num: number, cl: ClassInfo[]}];
   delClassSub!: Subscription;
 
   constructor(private classesService: ClassesService,
@@ -36,7 +33,6 @@ export class AdminClassesComponent implements OnInit, OnDestroy {
     this.getAllClasses();
     this.profilesSub = this.profilesService.getAll().subscribe((resp) => {
       this.profiles = resp;
-      AOS.init();
     }, error => console.log(error));
   }
 
@@ -44,6 +40,9 @@ export class AdminClassesComponent implements OnInit, OnDestroy {
     this.classesSub = this.classesService.getAllClassesIncluded().subscribe((resp) => {
       this.classes = [{num: parseInt(resp[0].name.substring(0, resp[0].name.indexOf('-'))), cl: [resp[0]]}];
       resp.forEach(c => {
+        if(c.id == resp[0].id) {
+          return;
+        }
         const n = parseInt(c.name.substring(0, c.name.indexOf('-')));
         if(this.classes.filter(clas => clas.num == n).length > 0) {
           this.classes.find(clas => clas.num == n)?.cl.push(c);
@@ -51,15 +50,7 @@ export class AdminClassesComponent implements OnInit, OnDestroy {
           this.classes.push({num: n, cl: [c]});
         }
       });
-      this.filteredClasses = this.classes;
     }, error => console.log(error));
-  }
-
-  filter() {
-    this.filteredClasses.forEach(c => {
-      const cll = this.classes.filter(cc => cc.num == c.num)[0];
-      c.cl = cll.cl.filter(cc => cc.name.toLowerCase().includes(this.filterClass.toLowerCase()));
-    })
   }
 
   openPupils(classId: number) {
@@ -73,7 +64,6 @@ export class AdminClassesComponent implements OnInit, OnDestroy {
       e.preventDefault();
       this.delClassSub = this.classesService.deleteClassById(classId).subscribe((resp) => {
         this.getAllClasses();
-        this.filter();
         this.snackBar.open("Клас видалено", "Ok");
       }, error => console.log(error));
       document.querySelector('.alert')?.classList.remove("is-visible");
@@ -96,13 +86,16 @@ export class AdminClassesComponent implements OnInit, OnDestroy {
 
   editClass(e: Event, classs: ClassInfo) {
     e.stopPropagation();
-    const dialogRef = this.dialog.open(ManageClassComponent);
+    const dialogRef = this.dialog.open(ManageClassComponent, {
+      height: '450px',
+      width: '450px',
+      panelClass: 'dialog-container'
+    });
     dialogRef.componentInstance.class = classs;
     dialogRef.componentInstance.action = "edit";
     dialogRef.componentInstance.btnText = "Зберегти";
     dialogRef.afterClosed().subscribe(res => {
       this.getAllClasses();
-      this.filter();
       if(res && res == "success") {
         this.snackBar.open("Клас відредаговано", "Ok");
       }
@@ -110,12 +103,15 @@ export class AdminClassesComponent implements OnInit, OnDestroy {
   }
 
   addClass() {
-    const dialogRef = this.dialog.open(ManageClassComponent);
+    const dialogRef = this.dialog.open(ManageClassComponent, {
+      height: '450px',
+      width: '450px',
+      panelClass: 'dialog-container'
+    });
     dialogRef.componentInstance.action = "add";
     dialogRef.componentInstance.btnText = "Додати";
     dialogRef.afterClosed().subscribe(res => {
       this.getAllClasses();
-      this.filter();
       if(res && res == "success") {
         this.snackBar.open("Клас додано", "Ok");
       }
@@ -133,5 +129,4 @@ export class AdminClassesComponent implements OnInit, OnDestroy {
       this.delClassSub.unsubscribe();
     }
   }
-
 }

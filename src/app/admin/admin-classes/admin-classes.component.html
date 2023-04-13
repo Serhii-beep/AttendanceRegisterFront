@@ -1,21 +1,14 @@
 <div class="classes-wrapper">
     <div class="search-container">
-        <div class="search">
-            <input type="text" class="search-input" placeholder="Пошук"
-                [(ngModel)]="filterClass"
-                (keyup)="filter()">
-            <mat-icon class="search-icon">search</mat-icon>
-        </div>
         <button (click)="addClass()" class="btn-add">Додати клас <mat-icon class="i">add</mat-icon></button>
     </div>
-    <div *ngFor="let class of filteredClasses" class="class-profile" data-aos="fade-up-right"
-        data-aos-duration="1250">
+    <div *ngFor="let class of classes" class="class-profile">
         <div *ngIf="class.cl.length > 0" class="class-profile-header">
             <div class="class-profile-header-num">{{ class.num }}</div>
             <div class="class-profile-header-line"></div>
         </div>
         <div class="class-profile-classes">
-            <div *ngFor="let cl of class.cl" class="class-profile-classes-card">
+            <div *ngFor="let cl of class.cl" (click)="openPupils(cl.id)" class="class-profile-classes-card">
                 <div class="class-profile-classes-card-header">
                     <div class="cl"><div class="cl-text">{{ cl.name }}</div></div>
                     <div class="num-pupils">
