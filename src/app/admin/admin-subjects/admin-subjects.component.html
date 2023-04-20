@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn-add">Додати предмет <mat-icon class="i">add</mat-icon></button>
+        <button (click)="addSubject()" class="btn-add">Додати предмет <mat-icon class="i">add</mat-icon></button>
     </div>
     <div class="table">
         <div class="header-row">
@@ -43,9 +43,19 @@
             <div class="button-container">
                 <button [routerLink]="['edit', subject.id]" class="icon-button"><mat-icon>edit</mat-icon></button>
                 <div class="divider"></div>
-                <button class="icon-button"><mat-icon>delete</mat-icon></button>
+                <button (click)="deleteSubject($event, subject.id)" class="icon-button"><mat-icon>delete</mat-icon></button>
             </div>
             <div class="divider"></div>
         </div>
+    </div>
+</div>
+<div class="alert">
+    <div class="alert-container">
+        <p>Ви впевнені, що хочете видалити цей клас?</p>
+        <footer class="buttons">
+            <div class="alert-confirm">Так</div>
+            <div class="alert-cancel">Відмінити</div>
+        </footer>
+        <div class="alert-close img-replace">&times;</div>
     </div>
 </div>

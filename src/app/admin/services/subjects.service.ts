@@ -23,4 +23,12 @@ export class SubjectsService {
   updateSubjectTeachersClasses(subject: Subject): Observable<Subject> {
     return this._httpClient.post<Subject>(`${this.BASE_URL}/teachers`, subject);
   }
+
+  addSubject(subject: Subject): Observable<Subject> {
+    return this._httpClient.post<Subject>(`${this.BASE_URL}`, subject);
+  }
+
+  deleteSubject(id: number): Observable<any> {
+    return this._httpClient.delete<any>(`${this.BASE_URL}/${id}`);
+  }
 }

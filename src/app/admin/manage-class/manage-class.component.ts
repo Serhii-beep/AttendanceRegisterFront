@@ -46,7 +46,7 @@ export class ManageClassComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.classForm = this.formBuilder.group({
       className: ['', Validators.required]
-    })
+    });
     this.profilesSub = this._classProfilesService.getAll().subscribe((resp: ClassProfile[]) => {
       this.profiles = resp;
       if(this.action == "edit") {

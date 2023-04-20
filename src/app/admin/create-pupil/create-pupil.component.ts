@@ -28,6 +28,7 @@ export class CreatePupilComponent implements OnInit, AfterViewInit, OnDestroy {
   firstName = '';
   lastName = '';
   middleName = '';
+  selectedClassId = 0;
 
   constructor(private formBuilder: FormBuilder,
     private classService: ClassesService,
@@ -65,41 +66,21 @@ export class CreatePupilComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     this.classes = await this.classService.getAllClasses().toPromise();
-    if(this.action == "create") {
-      if(this.pupil.class.id <= 0) {
-        this.pupil.class = this.classes[0];
-      }
-    } else {
+    this.classes = this.classes.sort((c1, c2) => {
+      const first = parseInt(c1.name.substring(0, c1.name.indexOf('-') + 1));
+      const second = parseInt(c2.name.substring(0, c2.name.indexOf('-') + 1));
+      const firstL = c1.name.substring(c1.name.indexOf('-'));
+      const secondL = c2.name.substring(c2.name.indexOf('-'));
+      return first == second ? firstL.localeCompare(secondL) : first - second;
+    });
+    if(this.action == "edit") {
       this.firstName = this.pupil.fullName.split(' ')[0];
       this.lastName = this.pupil.fullName.split(' ')[1];
       this.middleName = this.pupil.fullName.split(' ')[2];
     }
-    $(".dropdown-dialog").on("mouseenter", function() {
-      $(".options-wrapper-dialog").addClass("active");
-    });
-
-    $(".dropdown-dialog").on("mouseout", function(e) {
-      if(!$(e.relatedTarget!).hasClass("options-wrapper-dialog")) {
-        $(".options-wrapper-dialog").removeClass("active");
-      }
-    });
-
-    $(".options-wrapper-dialog").on("mouseleave", function() {
-      $(".options-wrapper-dialog").removeClass("active");
-    });
   }
 
   ngAfterViewInit(): void {
-  }
-
-  mouseOverOption(event: MouseEvent) {
-    if($(".options-wrapper-dialog").hasClass("active")) {
-      const opt = event.target as HTMLDivElement;
-      opt.style.cursor = 'pointer';
-    } else {
-      const opt = event.target as HTMLDivElement;
-      opt.style.cursor = 'default';
-    }
   }
 
   getEmailValidationError(): string {
@@ -117,12 +98,6 @@ export class CreatePupilComponent implements OnInit, AfterViewInit, OnDestroy {
       d = new Date();
     }
     return d < new Date();
-  }
-  
-  setClass(event: Event, classs: Class) {
-    if($(".options-wrapper-dialog").hasClass("active")) {
-      this.pupil.class = classs;
-    }
   }
 
   addPupil() {

@@ -188,100 +188,8 @@
     }
 }
 
-.dropdown-container-dialog {
-    margin-top: 40px;
-
-    .dropdown-dialog {
-        cursor: pointer;
-        width: 320px;
-        height: 53px;
-        background: #26273A;
-        box-shadow: inset 2px 5px 5px #040227;
-        border-radius: 20px;
-        padding: 18px 16px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 18px;
-        color: #FFFFFF;
-        font-weight: 300;
-        font-family: 'Montserrat', sans-serif;
-        box-sizing: border-box;
-    }
-
-    .options-wrapper-dialog {
-        margin-top: 0;
-        opacity: 0;
-        transition: .55s ease;
-        padding-top: 25px;
-        position: relative;
-        width: 260px;
-
-        .options-dialog {
-            z-index: -1;
-            overflow: scroll;
-            width: 260px;
-            background: #26273A;
-            border-radius: 20px;
-            border: 2px solid #060428;
-            padding: 18px 16px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            max-height: 200px;
-
-            &::-webkit-scrollbar {
-                display: none;
-            }
-
-            .option-dialog {
-                box-sizing: border-box;
-                min-height: 25px;
-                font-size: 16px;
-                color: #FFFFFF;
-                font-weight: 300;
-                font-family: 'Montserrat', sans-serif;
-                padding: 7px;
-                cursor: default;
-                margin-top: 20px;
-                margin-bottom: 20px;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                z-index: 2;
-
-                &:first-child {
-                    margin-top: 10px;
-                }
-
-                .active {
-                    opacity: 1;
-                }
-            }
-        }
-
-        .dropdown-arrow-dialog {
-            width: 25px;
-            height: 25px;
-            background-color: #26273A;
-            transform: rotate(45deg);
-            z-index: 1;
-            position: absolute;
-            top: 13px;
-            left: 33px;
-            border-top: 2px solid #060428;
-            border-left: 2px solid #060428;
-        }
-    }
-
-    .active {
-        opacity: 1;
-    }
-}
-
 .footer {
-    margin-top: 200px;
+    margin-top: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -331,4 +239,10 @@
     font-size: 11px;
     padding-left: 20px;
     padding-top: 5px;
+}
+
+.select-error {
+    width: 100%;
+    margin-left: 100%;
+    margin-top: 5px;
 }

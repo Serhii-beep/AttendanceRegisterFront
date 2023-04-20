@@ -33,6 +33,7 @@ import { AdminTeachersComponent } from './admin-teachers/admin-teachers.componen
 import { ManageTeacherComponent } from './manage-teacher/manage-teacher.component';
 import { AdminSubjectsComponent } from './admin-subjects/admin-subjects.component';
 import { EditSubjectComponent } from './edit-subject/edit-subject.component';
+import { CreateSubjectComponent } from './create-subject/create-subject.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { EditSubjectComponent } from './edit-subject/edit-subject.component';
     AdminTeachersComponent,
     ManageTeacherComponent,
     AdminSubjectsComponent,
-    EditSubjectComponent
+    EditSubjectComponent,
+    CreateSubjectComponent
   ],
   imports: [
     CommonModule,

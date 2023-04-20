@@ -50,6 +50,7 @@ export class AdminClassesComponent implements OnInit, OnDestroy {
           this.classes.push({num: n, cl: [c]});
         }
       });
+      this.classes = this.classes.sort((c1, c2) => c2.num - c1.num);
     }, error => console.log(error));
   }
 

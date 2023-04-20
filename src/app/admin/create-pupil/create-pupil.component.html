@@ -143,19 +143,17 @@
                     <mat-datepicker #picker disabled="false"></mat-datepicker>
                     <mat-error *ngIf="pupilForm.get('birthDateControl')?.invalid">Вік учня повинен бути від 5 до 18 років</mat-error>
                 </mat-form-field>
-                <div class="dropdown-container-dialog">
-                    <div class="dropdown-dialog">{{ pupil.class.name ? pupil.class.name : 'Клас' }} <mat-icon>keyboard_arrow_down</mat-icon></div>
-                    <div class="options-wrapper-dialog">
-                        <div class="dropdown-arrow-dialog"></div>
-                        <div class="options-dialog">
-                            <div class="option-dialog"
-                                (mouseover)="mouseOverOption($event)"
-                                (click)="setClass($event, class)"
-                                *ngFor="let class of classes">{{ class.name }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Клас</mat-label>
+                    <mat-select [(value)]="pupil.class.id">
+                        <mat-option *ngFor="let class of classes" [value]="class.id">
+                            {{ class.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <span class="error danger select-error" *ngIf="pupil.class.id <= 0">
+                    Це поле є обов'язковим
+                </span>
             </div>
         </div>
     </form>

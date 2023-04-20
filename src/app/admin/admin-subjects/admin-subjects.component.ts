@@ -3,6 +3,9 @@ import { Subject } from 'src/app/dtos/subject.dto';
 import { SubjectsService } from '../services/subjects.service';
 import { Subscription } from 'rxjs';
 import * as $ from 'jquery';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateSubjectComponent } from '../create-subject/create-subject.component';
 
 @Component({
   selector: 'app-admin-subjects',
@@ -15,15 +18,14 @@ export class AdminSubjectsComponent implements OnInit, OnDestroy {
   subjectSub!: Subscription;
   displayedColumns = ["Предмет", "Вчителі", "Класи"];
   subjectsFilter = "";
-  
+  delSubjectSub!: Subscription;
 
-  constructor(private subjectService: SubjectsService) { }
+  constructor(private subjectService: SubjectsService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.subjectSub = this.subjectService.getAllSubjects().subscribe((resp) => {
-      this.subjects = resp;
-      this.filteredSubjects = this.subjects;
-    }, error => console.log(error));
+    this.getAllSubjects();
 
     $(".dropdown").on("mouseenter", function() {
       $(".options-wrapper").addClass("active");
@@ -53,6 +55,13 @@ export class AdminSubjectsComponent implements OnInit, OnDestroy {
     });
   }
 
+  getAllSubjects() {
+    this.subjectSub = this.subjectService.getAllSubjects().subscribe((resp) => {
+      this.subjects = resp;
+      this.filteredSubjects = this.subjects;
+    }, error => console.log(error));
+  }
+
   filterSubjects() {
     this.filteredSubjects = this.subjects.filter(s => s.name.toLowerCase().includes(this.subjectsFilter.toLowerCase()));
   }
@@ -68,9 +77,53 @@ export class AdminSubjectsComponent implements OnInit, OnDestroy {
     }
   }
 
+  addSubject() {
+    const dialogRef = this.dialog.open(CreateSubjectComponent, {
+      height: '300px',
+      width: '450px',
+      panelClass: 'dialog-container'
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      this.getAllSubjects();
+      if(res && res == "success") {
+        this.snackBar.open("Предмет додано", "Ok");
+      }
+    })
+  }
+
+  deleteSubject(e: Event, subjectId: number) {
+    e.stopPropagation();
+    document.querySelector('.alert')?.classList.add("is-visible");
+    document.querySelector('.alert-confirm')?.addEventListener("click", (e) => {
+      e.preventDefault();
+      this.delSubjectSub = this.subjectService.deleteSubject(subjectId).subscribe((resp) => {
+        this.getAllSubjects();
+        this.snackBar.open("Предмет видалено", "Ok");
+      }, error => console.log(error));
+      document.querySelector('.alert')?.classList.remove("is-visible");
+    });
+    document.querySelector('.alert-cancel')?.addEventListener("click", (e) => {
+      e.preventDefault();
+      document.querySelector('.alert')?.classList.remove("is-visible");
+    });
+    document.querySelector('.alert-close')?.addEventListener("click", (e) => {
+      e.preventDefault();
+      document.querySelector('.alert')?.classList.remove("is-visible");
+    });
+    document.addEventListener("keyup", (event) => {
+      let e = <KeyboardEvent> event;
+      if(e.key == "Escape") {
+        document.querySelector('.alert')?.classList.remove("is-visible");
+      }
+    });
+  }
+
   ngOnDestroy(): void {
     if(this.subjectSub) {
       this.subjectSub.unsubscribe();
+    }
+    if(this.delSubjectSub) {
+      this.delSubjectSub.unsubscribe();
     }
   }
 }

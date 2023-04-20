@@ -1,0 +1,15 @@
+<mat-dialog-content>
+    <div class="wrapper">
+        <form class="form" [formGroup]="subjectForm">
+            <div class="input__wrapper">
+                <input id="subjectName" formControlName="subjectName" [(ngModel)]="name" class="input" required>
+                <label class="label" for="subjectName">Назва предмету</label>
+                <span class="error danger" *ngIf="subjectForm.get('subjectName')?.invalid
+                    && subjectForm.get('subjectName')?.touched">
+                    Це поле є обов'язковим
+                </span>
+            </div>
+            <button class="btn-submit" (click)="btnSubmitClick()">Додати предмет</button>
+        </form>
+    </div>
+</mat-dialog-content>

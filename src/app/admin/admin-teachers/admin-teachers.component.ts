@@ -70,7 +70,7 @@ export class AdminTeachersComponent implements OnInit, AfterViewInit, OnDestroy 
 
   getTeachers(fullName?: string) {
     this.isLoading = true;
-    this.teachersSub = this.teacherService.getAllteachersPaginated('desc', this.page, 30).subscribe((resp) => {
+    this.teachersSub = this.teacherService.getAllteachersPaginated('desc', this.page, 100).subscribe((resp) => {
       if(resp.length > 0) {
         this.teachers = resp;
         this.filteredTeachers = this.teachers;
