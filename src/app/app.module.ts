@@ -27,6 +27,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
+import { TeacherModule } from './teacher/teacher.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { MatCardModule } from '@angular/material/card';
     AuthorizationModule,
     SharedModule,
     AdminModule,
+    TeacherModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatFormFieldModule,

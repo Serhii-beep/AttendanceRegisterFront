@@ -1,0 +1,67 @@
+<div class="wrapper">
+    <div class="classes-wrapper">
+        <div class="tip-header">
+            <h2 class="step">Крок 1:</h2>
+            <p class="step-description">Оберіть клас.</p>
+        </div>
+        <div class="tools-container">
+            <div class="search">
+                <input type="text" class="search-input" placeholder="Пошук">
+                <mat-icon class="search-icon">search</mat-icon>
+            </div>
+            <mat-form-field appearance="outline">
+                <mat-label>Відсортувати за</mat-label>
+                <mat-select [(value)]="sortDirection">
+                    <mat-option value="asc">
+                        Зростанням
+                    </mat-option>
+                    <mat-option value="desc">
+                        Спаданням
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div *ngFor="let class of classes" class="class-profile">
+            <div *ngIf="class.cl.length > 0" class="class-profile-header">
+                <div class="class-profile-header-num">{{ class.num }}</div>
+                <div class="class-profile-header-line"></div>
+            </div>
+            <div class="class-profile-classes">
+                <div *ngFor="let cl of class.cl" (click)="selectClass(cl.id)" class="class-profile-classes-card"
+                    [class.card-active]="selectedClassId == cl.id">
+                    <div class="class-profile-classes-card-header">
+                        <div class="cl"><div class="cl-text">{{ cl.name }}</div></div>
+                        <div class="num-pupils">
+                            Кількість <br>учнів: <span class="num-pupils-num">{{ cl.numberOfPupils }}</span>
+                        </div>
+                    </div>
+                    <div class="class-profile-classes-card-content">
+                        <div class="divider"></div>
+                        <p class="text-1">Профіль:</p>
+                        <p class="text-2">{{ cl.profileName }}</p>
+                        <div class="divider"></div>
+                        <p class="text-1">Класний керівник:</p>
+                        <p class="text-2">{{ cl.supervisor }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper-divider"></div>
+    <div class="subjects-wrapper">
+        <div class="tip-header">
+            <h2 class="step">Крок 2:</h2>
+            <p class="step-description">Оберіть предмет.</p>
+        </div>
+        <div class="subjects-tip" *ngIf="selectedClassId == -1">
+            <p class="text-row">Спочатку</p>
+            <p class="text-row">оберіть</p>
+            <p class="text-row">клас</p>
+        </div>
+        <div class="subjects" *ngIf="selectedClassId != -1">
+            <div class="subjects-item" *ngFor="let subject of subjects">
+                {{ subject.name }}
+            </div>
+        </div>
+    </div>
+</div>

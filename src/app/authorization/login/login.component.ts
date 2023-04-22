@@ -51,6 +51,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         break;
       }
       case 'teacher': {
+        this.router.navigate(['teacher/classes']);
         break;
       }
     }
