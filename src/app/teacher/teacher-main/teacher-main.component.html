@@ -1,5 +1,6 @@
 <div class="wrapper-main">
     <div class="navbar">
+        <div class="home"><mat-icon routerLink="/teacher/classes" class="home-icon">home</mat-icon></div>
         <button [mat-menu-trigger-for]="menu" class="btn__profile">
             <span>
                 {{ currentUser.fullName.split(' ')[1][0] }}

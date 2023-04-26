@@ -16,6 +16,10 @@ export class ClassesService {
     return this._httpClient.get<Class[]>(`${this.BASE_URL}`);
   }
 
+  getById(id: number): Observable<Class> {
+    return this._httpClient.get<Class>(`${this.BASE_URL}/${id}`);
+  }
+
   getAllClassesIncluded(): Observable<ClassInfo[]> {
     return this._httpClient.get<ClassInfo[]>(`${this.BASE_URL}/included`);
   }

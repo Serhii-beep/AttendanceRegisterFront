@@ -1,0 +1,29 @@
+<div class="wrapper">
+    <div class="header">
+        <div class="header-class">
+            <div class="header-class-name">{{ classModel?.name }}</div>
+        </div>
+        <div class="header-subject">{{ subjectModel?.name }}</div>
+    </div>
+    <div class="accordion-wrapper">
+        <div *ngFor="let section of sections; let i = index">
+            <button class="accordion" (click)="expandAccordion($event, section.id)">
+                <mat-icon (click)="openMarks($event)" class="i">import_contacts</mat-icon>
+                <span class="accordion-title">Розділ {{ i + 1 }}.</span>
+                <span class="accordion-text">
+                    {{ section.name }}
+                </span>
+                <mat-icon class="ico i" [id]="'icon' + section.id">keyboard_arrow_down</mat-icon>
+            </button>
+            <div class="panel">
+                <div class="panel-item" [class.isFinal]="lesson.isFinal" *ngFor="let lesson of section.lessons; let j = index">
+                    <div class="panel-item-cell">{{ j + 1 }}</div>
+                    <div class="divider"></div>
+                    <div class="panel-item-cell">{{ lesson.date | date : 'dd.MM.yyyy' }}</div>
+                    <div class="divider"></div>
+                    <div class="panel-item-cell">{{ lesson.theme }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

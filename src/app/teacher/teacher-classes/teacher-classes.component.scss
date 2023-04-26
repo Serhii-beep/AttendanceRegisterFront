@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+    display: none !important;
+}
+
 .wrapper {
     width: 100%;
     height: 100%;
@@ -19,6 +23,9 @@
 .classes-wrapper {
     width: 65%;
     height: 100%;
+    overflow: scroll;
+    padding-bottom: 50px;
+
 
     .tip-header {
         padding-left: 52px;
@@ -45,13 +52,14 @@
     .tools-container {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         padding-left: 52px;
         margin-top: 50px;
         padding-right: 60px;
 
         .search {
             min-width: 250px;
-            min-height: 50px;
+            height: 50px;
             background: transparent;
             border: 1px solid #111128;
             border-radius: 20px;
@@ -347,86 +355,5 @@
                 }
             }
         }
-    }
-}
-
-::ng-deep {
-    .mat-form-field {
-        width: 260px;
-        height: 50px;
-    }
-    
-    .mat-form-field-wrapper {
-        padding-bottom: 0;
-        margin: 0;
-    }
-    
-    .mat-form-field-appearance-outline .mat-form-field-outline {
-        background: transparent;
-        border: 1px solid #111128;
-        border-radius: 20px;
-        box-shadow: none;
-    }
-    
-    .mat-form-field-appearance-outline .mat-form-field-outline-start {
-        border: none !important;
-    }
-    
-    .mat-form-field-appearance-outline .mat-form-field-outline-gap {
-        border: none !important;
-    }
-    
-    .mat-form-field-appearance-outline .mat-form-field-outline-end {
-        border: none !important;
-    }
-    
-    .mat-form-field-label, .mat-select-value {
-        font-family: 'Montserrat', sans-serif !important;
-        font-weight: 300 !important;
-        font-size: 14px !important;
-        line-height: 24px;
-        letter-spacing: .05em;
-        color: #111128;
-    }
-    
-    .mat-select-arrow {
-        color: #111128;
-    }
-    
-    .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
-        color: #111128;
-    }
-    
-    .mat-form-field.mat-focused .mat-form-field-label {
-        color: #111128;
-    }
-    
-    .mat-select-panel {
-        background: rgb(51, 52, 69);
-    }
-    
-    .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
-        color: rgba(137, 137, 137, 0.59);
-    }
-    
-    .mat-option {
-        font-family: 'Montserrat', sans-serif;
-        font-weight: 300;
-        color: rgba(245, 245, 245, .59);
-    }
-    
-    .mat-option.mat-active {
-        font-family: 'Montserrat', sans-serif;
-        font-weight: 300;
-        color: rgba(245, 245, 245, .59);
-    }
-    
-    .mat-input-element {
-        caret-color: #FFFFFF;
-    }
-
-    .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label, .mat-form-field-appearance-outline.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label {
-        transform: translateY(-15px) scale(0.75);
-        width: 133%;
     }
 }

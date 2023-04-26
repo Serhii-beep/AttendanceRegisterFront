@@ -11,7 +11,7 @@
             </div>
             <mat-form-field appearance="outline">
                 <mat-label>Відсортувати за</mat-label>
-                <mat-select [(value)]="sortDirection">
+                <mat-select [(value)]="sortDirection" (valueChange)="sortClasses()">
                     <mat-option value="asc">
                         Зростанням
                     </mat-option>
@@ -59,7 +59,7 @@
             <p class="text-row">клас</p>
         </div>
         <div class="subjects" *ngIf="selectedClassId != -1">
-            <div class="subjects-item" *ngFor="let subject of subjects">
+            <div class="subjects-item" [routerLink]="['/teacher/subject', selectedClassId, subject.id]" *ngFor="let subject of subjects">
                 {{ subject.name }}
             </div>
         </div>

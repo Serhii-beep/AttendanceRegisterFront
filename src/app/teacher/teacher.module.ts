@@ -8,12 +8,14 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { TeacherSubjectComponent } from './teacher-subject/teacher-subject.component';
 
 
 @NgModule({
   declarations: [
     TeacherMainComponent,
-    TeacherClassesComponent
+    TeacherClassesComponent,
+    TeacherSubjectComponent
   ],
   imports: [
     CommonModule,

@@ -61,6 +61,14 @@ export class TeacherClassesComponent implements OnInit, OnDestroy {
     })
   }
 
+  sortClasses() {
+    if(this.sortDirection == 'asc') {
+      this.classes = this.classes.sort((c1, c2) => c1.num - c2.num);
+    } else {
+      this.classes = this.classes.sort((c1, c2) => c2.num - c1.num);
+    }
+  }
+
   ngOnDestroy(): void {
     if(this.classesSub) {
       this.classesSub.unsubscribe();
