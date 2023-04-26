@@ -251,6 +251,11 @@
                 background: transparent;
                 color: #FFFFFF;
                 cursor: pointer;
+                transition: .3s ease;
+
+                &:hover {
+                    transform: scale(1.3);
+                }
             }
         }
 

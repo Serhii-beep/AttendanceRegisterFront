@@ -104,9 +104,14 @@
                 padding: 0;
                 margin-left: 20px;
                 color: #FFFFFF;
+                transition: .3s ease;
 
                 &:focus {
                     outline: none;
+                }
+
+                &:hover {
+                    transform: scale(1.3);
                 }
             }
         }

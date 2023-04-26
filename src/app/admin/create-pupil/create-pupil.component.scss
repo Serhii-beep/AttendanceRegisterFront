@@ -211,6 +211,12 @@
         font-weight: 400;
         font-size: 20px;
         color: #FFFFFF;
+        transition: .4s ease;
+
+        &:hover {
+            background: #FFFFFF;
+            color: #000000;
+        }
     }
 
     &-save {
@@ -227,6 +233,13 @@
         box-shadow: 0px 4px 4px rgba(0, 0, 0, .25);
         border-radius: 20px;
         cursor: pointer;
+        transition: .4s ease;
+
+        &:hover {
+            background: transparent;
+            border: 1px solid #FFFFFF;
+            color: #FFFFFF;
+        }
     }
 }
 
