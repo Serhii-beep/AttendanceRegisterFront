@@ -1,0 +1,18 @@
+<div class="wrapper-main">
+    <div class="navbar">
+        <div class="home"><mat-icon routerLink="/pupil/subjects" class="home-icon">home</mat-icon></div>
+        <button [mat-menu-trigger-for]="menu" class="btn__profile">
+            <span>
+                {{ currentUser.fullName.split(' ')[1][0] }}
+                {{ currentUser.fullName.split(' ')[0][0] }}
+            </span>
+        </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="logout()">
+                <mat-icon>logout</mat-icon> 
+                <span>Вийти</span>
+              </button>
+            </mat-menu>
+        </div>
+    <router-outlet></router-outlet>
+</div>

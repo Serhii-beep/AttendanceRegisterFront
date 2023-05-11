@@ -1,0 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+.wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+$cell-width: 40px;
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.table {
+    width: 90%;
+    border: 1px solid #000000;
+    border-radius: 30px;
+    overflow-x: scroll;
+    margin-top: 30px;
+
+    .header-row {
+        border-bottom: 1px solid #000000;
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        display: flex;
+        height: 200px;
+        min-width: max-content;
+
+        &-title {
+            height: 100%;
+            min-width: 281px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            font-size: 26px;
+            line-height: 32px;
+            color: #000000;
+        }
+
+        &-content {
+            width: 100%;
+            height: 100%;
+
+            .themes {
+                display: flex;
+                width: 100%;
+                height: 85%;
+
+                &-item {
+                    writing-mode: vertical-rl;
+                    transform: rotate(180deg);
+                    border-right: 1px solid #000000;
+                    width: $cell-width;
+                    display: flex;
+                    align-items: center;
+                    font-family: 'Montserrat', sans-serif;
+                    font-size: 14px;
+                    color: #000000;
+                    overflow-wrap: break-word;
+                    padding: 5px 0;
+
+                    &:focus {
+                        outline: none;
+                        background-color: rgba(0, 0, 0, .1);
+                        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+                    }
+
+                    &:last-child {
+                        border-left: 1px solid #000000;
+                    }
+                }
+            }
+
+            .dates {
+                display: flex;
+                width: 100%;
+                height: 15%;
+                border-top: 1px solid #000000;
+
+                &-item {
+                    font-family: 'Montserrat', sans-serif;
+                    font-size: 13px;
+                    min-width: $cell-width;
+                    color: #000000;
+                    border-left: 1px solid #000000;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    &:focus {
+                        outline: none;
+                        background-color: rgba(0, 0, 0, .1);
+                        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+                    }
+
+                    &:last-child {
+                        border-right: 1px solid #000000;
+                    }
+                }
+            }
+        }
+    }
+
+    .row {
+        display: flex;
+        min-width: max-content;
+        border-bottom: 1px solid #000000;
+
+        &:nth-child(odd) {
+            background: transparent;
+        }
+
+        &:nth-child(odd) {
+            background: #B5ABA4;
+        }
+
+        &:last-child {
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+        }
+
+        .cell-pupil {
+            min-width: 281px;
+            height: $cell-width;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 8px;
+            overflow: hidden;
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        .cell {
+            min-width: $cell-width;
+            min-height: $cell-width;
+            border-left: 1px solid #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &:last-child {
+                border-right: 1px solid #000000;
+            }
+        }
+    }
+}
+
+.absent {
+    background: rgba(236, 108, 108, .3) !important;
+}
+
+.export-section {
+    width: 85%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    gap: 20px;
+
+    .btn {
+        width: 100px;
+        height: 40px;
+        background: transparent;
+        border: 1px solid #000000;
+        outline: none;
+        border-radius: 20px;
+        transition: .4s ease;
+        cursor: pointer;
+        color: #111128;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
+        font-size: 12px;
+
+        &:hover {
+            background: #000000;
+            color: #EBDFD7;
+        }
+    }
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 150px;
+
+    &-class {
+        width: 170px;
+        height: 80px;
+        position: relative;
+        align-items: center;
+        background: transparent;
+        background-image: url('../images/class-header-2.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        font-family: 'Montserrat', sans-serif;
+        color: #EBDFD7;
+        font-weight: 400;
+        font-size: 40px;
+        line-height: 49px;
+        
+        &-name {
+            position: absolute;
+            top: 15px;
+            left: 40px;
+        }
+    }
+
+    &-subject {
+        margin-left: 45px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
+        font-size: 40px;
+        line-height: 49px;
+        color: #111128;
+    }
+}
+
+.section {
+    display: flex;
+    width: 90%;
+    margin-left: 150px;
+    margin-right: 150px;
+    padding-right: 30px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    align-items: flex-end;
+
+    &-header {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        font-size: 40px;
+        line-height: 49px;
+        color: #111128;
+    }
+
+    &-name {
+        margin-left: 18px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
+        font-size: 32px;
+        line-height: 39px;
+        color: #000000;
+    }
+}
+
+.final {
+    background: #5d5dd2;
+}
+
+.semester {
+    background-color: #414194;
+}
+
+.annual {
+    background-color: #2b2b5e;
+}

@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap');
+
+.wrapper-main {
+    height: 100vh;
+    width: 100%;
+    background: #C7BEB8;
+    overflow: hidden;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 80px;
+    background-color: #C7BEB8;
+    justify-content: space-between;
+
+    .home {
+      margin-left: 50px;
+
+      &-icon {
+        color: #111128;
+        font-size: 50px;
+        cursor: pointer;
+      }
+    }
+  }
+  
+  .btn__profile {
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    background: transparent;
+    box-shadow: none;
+    color: #111128;
+    background-image: url('../../teacher/images/profile_ellipse.svg');
+    background-repeat: no-repeat;
+    width: 75px;
+    height: 80px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    
+    span {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      font-size: 22px;
+      color: #111128;
+      position: absolute;
+      top: 37px;
+      right: 46px;
+    }
+  }

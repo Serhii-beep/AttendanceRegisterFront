@@ -1,0 +1,28 @@
+<div class="wrapper">
+    <div class="header">
+        <span class="header-text">Аналіз роботи учня </span>
+        <span class="header-text-bold">{{ pupilModel?.fullName }}</span>
+        <span class="header-text"> з предмету </span>
+        <span class="header-text-bold">{{ subjectModel?.name }}</span>
+    </div>
+    <div class="dashboard">
+        <div class="kpis">
+            <div class="kpi">
+                <div class="kpi-header">Середній бал</div>
+                <div class="kpi-value">{{ getAvg() }}</div>
+            </div>
+            <div class="kpi">
+                <div class="kpi-header">Всього оцінок</div>
+                <div class="kpi-value">{{ pupilAnalytics.length }}</div>
+            </div>
+            <div class="kpi">
+                <div class="kpi-header">Пропущено уроків</div>
+                <div class="kpi-value">{{ skippedLessons.length }}</div>
+            </div>
+            <div class="kpi">
+                <div class="kpi-header">Відвідано уроків</div>
+                <div class="kpi-value">{{ lessons.length - skippedLessons.length }}</div>
+            </div>
+        </div>
+    </div>
+</div>

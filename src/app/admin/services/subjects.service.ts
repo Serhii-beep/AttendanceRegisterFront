@@ -20,6 +20,14 @@ export class SubjectsService {
     return this._httpClient.get<Subject>(`${this.BASE_URL}/${id}`);
   }
 
+  getSubjectsByPupil(pupilId: number): Observable<Subject[]> {
+    return this._httpClient.get<Subject[]>(`${this.BASE_URL}/pupil=${pupilId}`);
+  }
+
+  getSubjectBySubjectClass(subjectClassId: number): Observable<Subject> {
+    return this._httpClient.get<Subject>(`${this.BASE_URL}/sc=${subjectClassId}`);
+  }
+
   updateSubjectTeachersClasses(subject: Subject): Observable<Subject> {
     return this._httpClient.post<Subject>(`${this.BASE_URL}/teachers`, subject);
   }

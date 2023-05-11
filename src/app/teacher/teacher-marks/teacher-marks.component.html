@@ -1,0 +1,46 @@
+<div class="wrapper">
+    <div class="header">
+        <div class="header-class">
+            <div class="header-class-name">{{ classModel?.name }}</div>
+        </div>
+        <div class="header-subject">{{ subjectModel?.name }}</div>
+    </div>
+    <div class="section">
+        <span class="section-header">Розділ.</span>
+        <span class="section-name">{{ sectionModel?.name }}</span>
+        <button (click)="saveMarks()" class="save-btn"><mat-icon>save</mat-icon></button>
+    </div>
+    <div class="table">
+        <div class="header-row">
+            <div class="header-row-title">Учень</div>
+            <div class="header-row-content">
+                <div class="themes">
+                    <div (keydown)="onKeyDownThemesDates($event)" class="themes-item" (input)="themeInput(lesson, $event)" contenteditable="true" *ngFor="let lesson of lessons"
+                        [class.final]="lesson.isFinal"
+                        [class.semester]="lesson.isSemester"
+                        [class.annual]="lesson.isAnnual">
+                        {{ lesson.theme }}
+                    </div>
+                    <div (keydown)="onKeyDownThemesDates($event)" (keyup)="saveTheme($event)" (input)="themeInput(newLessonModel, $event)" class="themes-item" contenteditable="true">
+                    </div>
+                </div>
+                <div class="dates">
+                    <div (keydown)="onKeyDownThemesDates($event)" class="dates-item" *ngFor="let lesson of lessons" contenteditable="true">
+                        {{ lesson.date | date : 'dd.MM' }}
+                    </div>
+                    <div (keydown)="onKeyDownThemesDates($event)" class="dates-item" contenteditable="true">
+                        {{ newLessonModel.date | date : 'dd.MM' }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngFor="let pupil of pupils">
+            <div class="cell-pupil">{{ pupil.fullName }}</div>
+            <div class="cell" *ngFor="let lesson of lessons">
+                <input (input)="validateInputMark($event, pupil.id, lesson.id)" class="cell-input" type="text" [(ngModel)]="getMark(pupil.id, lesson.id).value"
+                    (keydown)="onKeyDown($event)"
+                    [class.absent]="getMark(pupil.id, lesson.id).value === 'н'">
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="wrapper">
+    <div class="header">
+        <div class="header-class">
+            <div class="header-class-name">{{ classModel?.name }}</div>
+        </div>
+        <div class="header-subject">{{ subjectModel?.name }}</div>
+    </div>
+    <div class="tools">
+        <button [routerLink]="['/pupil/analytics', pupilId, subjectId]" class="tools-analytics">
+            <mat-icon class="ico">bar_chart</mat-icon>
+            Аналітика
+        </button>
+    </div>
+    <div class="table">
+        <div class="header-row">
+            <div class="header-row-title">Учень</div>
+            <div class="header-row-content">
+                <div class="themes">
+                    <div class="themes-item" *ngFor="let lesson of lessons"
+                        [class.final]="lesson.isFinal"
+                        [class.semester]="lesson.isSemester"
+                        [class.annual]="lesson.isAnnual">
+                        {{ lesson.theme }}
+                    </div>
+                </div>
+                <div class="dates">
+                    <div class="dates-item" *ngFor="let lesson of lessons">
+                        {{ lesson.date | date : 'dd.MM' }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngFor="let pupil of pupils">
+            <div class="cell-pupil">{{ pupil.fullName }}</div>
+            <div class="cell" [class.absent]="getMark(pupil.id, lesson.id).value === 'н'" *ngFor="let lesson of lessons">
+                {{ getMark(pupil.id, lesson.id).value }}
+            </div>
+        </div>
+    </div>
+</div>

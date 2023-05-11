@@ -20,6 +20,10 @@ export class ClassesService {
     return this._httpClient.get<Class>(`${this.BASE_URL}/${id}`);
   }
 
+  getBySubjectClass(subjectClassId: number): Observable<Class> {
+    return this._httpClient.get<Class>(`${this.BASE_URL}/sc=${subjectClassId}`);
+  }
+
   getAllClassesIncluded(): Observable<ClassInfo[]> {
     return this._httpClient.get<ClassInfo[]>(`${this.BASE_URL}/included`);
   }

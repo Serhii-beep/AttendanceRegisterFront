@@ -16,6 +16,10 @@ export class PupilsService {
     return this.httpClient.get<Pupil[]>(`${this.BASE_URL}/order=${order}&page=${page}&itemsPerPage=${itemsPerPage}`);
   }
 
+  getByClass(classId: number): Observable<Pupil[]> {
+    return this.httpClient.get<Pupil[]>(`${this.BASE_URL}/class=${classId}`);
+  }
+
   addPupil(pupil: Pupil): Observable<Pupil> {
     return this.httpClient.post<Pupil>(`${this.BASE_URL}`, pupil);
   }

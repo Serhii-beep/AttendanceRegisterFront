@@ -28,6 +28,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
 import { TeacherModule } from './teacher/teacher.module';
+import { PupilModule } from './pupil/pupil.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { TeacherModule } from './teacher/teacher.module';
     SharedModule,
     AdminModule,
     TeacherModule,
+    PupilModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatFormFieldModule,

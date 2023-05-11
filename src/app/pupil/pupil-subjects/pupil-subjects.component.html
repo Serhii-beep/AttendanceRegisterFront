@@ -1,0 +1,6 @@
+<div class="wrapper">
+    <div class="subjects">
+        <div class="subjects-item" *ngFor="let subject of subjects"
+            [routerLink]="['/pupil/marks', pupilModel.id, subject.id]">{{ subject.name }}</div>
+    </div>
+</div>

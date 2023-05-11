@@ -5,10 +5,16 @@
         </div>
         <div class="header-subject">{{ subjectModel?.name }}</div>
     </div>
+    <div class="toolbar">
+        <button class="all-marks-btn"><mat-icon class="all-marks-btn-icon"
+            [routerLink]="['/teacher/marks', sections[0].lessons[0].subjectClassId]">import_contacts</mat-icon></button>
+    </div>
     <div class="accordion-wrapper">
         <div *ngFor="let section of sections; let i = index">
             <button class="accordion" (click)="expandAccordion($event, section.id)">
-                <mat-icon (click)="openMarks($event)" class="i">import_contacts</mat-icon>
+                <mat-icon appHoverPropagation (click)="openMarks($event)"
+                    class="i"
+                    [routerLink]="['/teacher/marks', section.id, classId, subjectId]">import_contacts</mat-icon>
                 <span class="accordion-title">Розділ {{ i + 1 }}.</span>
                 <span class="accordion-text">
                     {{ section.name }}
